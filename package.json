@@ -9,13 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.3.6",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "framer-motion": "^6.5.1",
     "next": "12.3.1",
+    "next-qrcode": "^2.2.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-color": "^2.19.3",
+    "react-dom": "18.2.0",
+    "react-select": "^5.5.5"
   },
   "devDependencies": {
     "@types/node": "18.11.5",
     "@types/react": "18.0.22",
+    "@types/react-color": "^3.0.6",
     "@types/react-dom": "18.0.7",
     "eslint": "8.26.0",
     "eslint-config-next": "12.3.1",
