@@ -409,7 +409,56 @@ const Home: NextPage = () => {
                         padding: '20px',
                       }}
                     >
-                      Hello
+                      {`import React from 'react';
+import { useQRCode } from 'next-qrcode';
+
+function App() {
+  const { ${selectedRenderAs.value === 'canvas' ? 'Canvas' : 'Image'} } = useQRCode();
+
+  return (
+    ${
+      selectedRenderAs.value === 'canvas' ?
+        (`<Canvas
+      text='${text}'
+      ${
+        includeOptions ? 
+        `options: {
+        level: '${selectedLevel.value}',
+        margin: ${margin},
+        scale: ${scale},
+        width: ${width},
+        color: {
+          dark: '${darkColor}',
+          light: '${lightColor}',
+        }
+      }` : ''
+      }
+    />`
+        )
+        : (`<Image
+      text='${text}'
+      ${
+        includeOptions ? 
+      `options: {
+        type: 'image/jpeg',
+        quality: 0.3,
+        level: '${selectedLevel.value}',
+        margin: ${margin},
+        scale: ${scale},
+        width: ${width},
+        color: {
+          dark: '${darkColor}',
+          light: '${lightColor}',
+        }
+      }` : ''
+      }
+    />`
+        )
+    }
+  );
+}
+
+export default App;`}
                     </code>
                   </pre>
                 </Box>
