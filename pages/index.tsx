@@ -4,8 +4,10 @@
 
 import React, { useState } from 'react';
 import type { NextPage } from 'next'
+import Link from 'next/link';
 
 import {
+  Container,
   Stack,
   Box,
   Input,
@@ -15,8 +17,7 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  HStack,
-  VStack,
+  Flex,
 } from '@chakra-ui/react'
 import Select from 'react-select';
 import { SketchPicker } from 'react-color';
@@ -118,7 +119,22 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Stack spacing={6}>
+      <Box bg={'black'} px={4} color="white">
+        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+          <Box>next-qrcode</Box>
+          <Flex alignItems={'center'}>
+            <Stack direction={'row'} spacing={7}>
+              <Box>
+                <span>
+                  <iframe src="https://ghbtns.com/github-btn.html?user=Bunlong&repo=next-qrcode&type=star&count=true" frameBorder="0" scrolling="0" width="80px" height="20px"></iframe>
+                </span>
+              </Box>
+            </Stack>
+          </Flex>
+        </Flex>
+      </Box>
+      <Container maxW='container.md' paddingBottom="50" marginTop="50">
+        <Stack spacing={6}>
         <Stack spacing={3}>
           <Box>
             <label>Render as:</label>
@@ -467,6 +483,7 @@ export default App;`}
           </fieldset>
         </Stack>
       </Stack>
+      </Container>
     </>
   )
 }
