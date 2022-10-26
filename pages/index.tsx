@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import type { NextPage } from 'next'
-
 import {
   Container,
   Stack,
@@ -118,6 +117,19 @@ const Home: NextPage = () => {
     }
   }
 
+  const disabled = Object.assign(
+    {
+      width: '100%',
+      padding: '5px',
+      background: '#fff',
+      borderRadius: '5px',
+      boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
+      display: 'inline-block',
+      cursor: 'pointer',
+    },
+    !includeOptions ? { pointerEvents: 'none', opacity: 0.7 } : {}
+  )
+
   return (
     <>
       <Box bg={'black'} px={4} color="white">
@@ -167,16 +179,18 @@ const Home: NextPage = () => {
               />
             </Box>
           </Stack>
-          <Stack spacing={3}>
+          <Stack spacing={3} direction="row">
             <Box>
               <label>Include Options:</label>
             </Box>
-            <Box>
+            <Box style={{ marginTop: '4px' }}>
               <Checkbox defaultChecked onChange={handleChangeCheckbox} />
             </Box>
           </Stack>
           <Stack spacing={3}>
-            <fieldset>
+            <fieldset
+              style={{ border: '1px solid #ccc', borderRadius: 5, padding: 20 }}
+            >
               <legend>Options</legend>
               <Stack spacing={6}>
                 {selectedRenderAs.value !== 'canvas' && (
@@ -246,7 +260,7 @@ const Home: NextPage = () => {
                       min={0}
                       name="margin"
                       value={margin}
-                      isDisabled={includeOptions ? false : true}
+                      isDisabled={!includeOptions}
                       onChange={(value) =>
                         handleChangeNumberInput({
                           target: { name: 'margin', value },
@@ -271,7 +285,7 @@ const Home: NextPage = () => {
                       min={0}
                       name="scale"
                       value={scale}
-                      isDisabled={includeOptions ? false : true}
+                      isDisabled={!includeOptions}
                       onChange={(value) =>
                         handleChangeNumberInput({
                           target: { name: 'scale', value },
@@ -296,7 +310,7 @@ const Home: NextPage = () => {
                       min={0}
                       name="width"
                       value={width}
-                      isDisabled={includeOptions ? false : true}
+                      isDisabled={!includeOptions}
                       onChange={(value) =>
                         handleChangeNumberInput({
                           target: { name: 'width', value },
@@ -316,18 +330,7 @@ const Home: NextPage = () => {
                     <label>Dark color:</label>
                   </Box>
                   <Box>
-                    <div
-                      style={{
-                        width: '100%',
-                        padding: '5px',
-                        background: '#fff',
-                        borderRadius: '1px',
-                        boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
-                        display: 'inline-block',
-                        cursor: 'pointer',
-                      }}
-                      onClick={handleClickDark}
-                    >
+                    <div style={disabled} onClick={handleClickDark}>
                       <div
                         style={{
                           width: '100%',
@@ -362,18 +365,7 @@ const Home: NextPage = () => {
                     <label>Light color:</label>
                   </Box>
                   <Box>
-                    <div
-                      style={{
-                        width: '100%',
-                        padding: '5px',
-                        background: '#fff',
-                        borderRadius: '1px',
-                        boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
-                        display: 'inline-block',
-                        cursor: 'pointer',
-                      }}
-                      onClick={handleClickLight}
-                    >
+                    <div style={disabled} onClick={handleClickLight}>
                       <div
                         style={{
                           width: '100%',
@@ -403,53 +395,62 @@ const Home: NextPage = () => {
                     ) : null}
                   </Box>
                 </Stack>
-                <Stack spacing={3}>
-                  <Box>
-                    {selectedRenderAs.value === 'canvas' ? (
-                      <Canvas
-                        text={text}
-                        options={{
-                          level: selectedLevel.value,
-                          margin: margin,
-                          scale: scale,
-                          width: width,
-                          color: {
-                            dark: darkColor,
-                            light: lightColor,
-                          },
-                        }}
-                      />
-                    ) : (
-                      <Image
-                        text={text}
-                        options={{
-                          type: selectedType.value,
-                          quality: quality,
-                          level: selectedLevel.value,
-                          margin: margin,
-                          scale: scale,
-                          width: width,
-                          color: {
-                            dark: darkColor,
-                            light: lightColor,
-                          },
-                        }}
-                      />
-                    )}
-                  </Box>
-                </Stack>
-                <Stack spacing={3}>
-                  <Box>
-                    <pre>
-                      <code
-                        style={{
-                          backgroundColor: '#eee',
-                          border: '1px solid #999',
-                          display: 'block',
-                          padding: '20px',
-                        }}
-                      >
-                        {`import React from 'react';
+              </Stack>
+            </fieldset>
+            <Stack spacing={3}>
+              <Box>
+                {selectedRenderAs.value === 'canvas' ? (
+                  includeOptions ? (
+                    <Canvas
+                      text={text}
+                      options={{
+                        level: selectedLevel.value,
+                        margin: margin,
+                        scale: scale,
+                        width: width,
+                        color: {
+                          dark: darkColor,
+                          light: lightColor,
+                        },
+                      }}
+                    />
+                  ) : (
+                    <Canvas text={text} />
+                  )
+                ) : includeOptions ? (
+                  <Image
+                    text={text}
+                    options={{
+                      type: selectedType.value,
+                      quality: quality,
+                      level: selectedLevel.value,
+                      margin: margin,
+                      scale: scale,
+                      width: width,
+                      color: {
+                        dark: darkColor,
+                        light: lightColor,
+                      },
+                    }}
+                  />
+                ) : (
+                  <Image text={text} />
+                )}
+              </Box>
+            </Stack>
+            <Stack spacing={3}>
+              <Box>
+                <pre>
+                  <code
+                    style={{
+                      backgroundColor: '#eee',
+                      border: '1px solid #999',
+                      display: 'block',
+                      padding: '20px',
+                      borderRadius: '5px',
+                    }}
+                  >
+                    {`import React from 'react';
 import { useQRCode } from 'next-qrcode';
 
 function App() {
@@ -501,12 +502,10 @@ function App() {
 }
 
 export default App;`}
-                      </code>
-                    </pre>
-                  </Box>
-                </Stack>
-              </Stack>
-            </fieldset>
+                  </code>
+                </pre>
+              </Box>
+            </Stack>
           </Stack>
         </Stack>
       </Container>
