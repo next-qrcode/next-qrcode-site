@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, CSSProperties } from 'react'
 import type { NextPage } from 'next'
 import {
   Container,
@@ -12,6 +12,7 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Flex,
+  Center,
 } from '@chakra-ui/react'
 import Select from 'react-select'
 import { SketchPicker } from 'react-color'
@@ -128,7 +129,7 @@ const Home: NextPage = () => {
       cursor: 'pointer',
     },
     !includeOptions ? { pointerEvents: 'none', opacity: 0.7 } : {}
-  )
+  ) as CSSProperties
 
   return (
     <>
@@ -152,7 +153,7 @@ const Home: NextPage = () => {
           </Flex>
         </Flex>
       </Box>
-      <Container maxW="container.md" paddingBottom="50" marginTop="50">
+      <Container maxW="container.md" paddingBottom="50" marginTop={10}>
         <Stack spacing={6}>
           <Stack spacing={3}>
             <Box>
@@ -397,13 +398,33 @@ const Home: NextPage = () => {
                 </Stack>
               </Stack>
             </fieldset>
-            <Stack spacing={3}>
-              <Box>
-                {selectedRenderAs.value === 'canvas' ? (
-                  includeOptions ? (
-                    <Canvas
+            <Stack spacing={3} paddingTop={30} paddingBottom={30}>
+              <Center>
+                <Box>
+                  {selectedRenderAs.value === 'canvas' ? (
+                    includeOptions ? (
+                      <Canvas
+                        text={text}
+                        options={{
+                          level: selectedLevel.value,
+                          margin: margin,
+                          scale: scale,
+                          width: width,
+                          color: {
+                            dark: darkColor,
+                            light: lightColor,
+                          },
+                        }}
+                      />
+                    ) : (
+                      <Canvas text={text} />
+                    )
+                  ) : includeOptions ? (
+                    <Image
                       text={text}
                       options={{
+                        type: selectedType.value,
+                        quality: quality,
                         level: selectedLevel.value,
                         margin: margin,
                         scale: scale,
@@ -415,28 +436,10 @@ const Home: NextPage = () => {
                       }}
                     />
                   ) : (
-                    <Canvas text={text} />
-                  )
-                ) : includeOptions ? (
-                  <Image
-                    text={text}
-                    options={{
-                      type: selectedType.value,
-                      quality: quality,
-                      level: selectedLevel.value,
-                      margin: margin,
-                      scale: scale,
-                      width: width,
-                      color: {
-                        dark: darkColor,
-                        light: lightColor,
-                      },
-                    }}
-                  />
-                ) : (
-                  <Image text={text} />
-                )}
-              </Box>
+                    <Image text={text} />
+                  )}
+                </Box>
+              </Center>
             </Stack>
             <Stack spacing={3}>
               <Box>
