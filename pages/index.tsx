@@ -396,6 +396,11 @@ const Home: NextPage = () => {
                     ) : null}
                   </Box>
                 </Stack>
+                <Stack spacing={3}>
+                  <Box>
+                    <label>Logo:</label>
+                  </Box>
+                </Stack>
               </Stack>
             </fieldset>
             <Stack spacing={3} paddingTop={30} paddingBottom={30}>
