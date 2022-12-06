@@ -13,6 +13,7 @@ import {
   NumberDecrementStepper,
   Flex,
   Center,
+  Text,
 } from '@chakra-ui/react'
 import Select from 'react-select'
 import { SketchPicker } from 'react-color'
@@ -57,6 +58,12 @@ const Home: NextPage = () => {
   const [width, setWidth] = useState(150)
   const [includeOptions, setIncludeOptions] = useState(true)
   const { Canvas, Image } = useQRCode()
+  const [src, setSrc] = useState('https://next-qrcode.js.org/github.png')
+  const [includeLogo, setIncludeLogo] = useState(true)
+  const [includeLogoOptions, setIncludeLogoOptions] = useState(true)
+  const [widthLogo, setWidthLogo] = useState(35)
+  const [x, setX] = useState(58)
+  const [y, setY] = useState(58)
 
   const handleClickDark = () => {
     setDisplayDarkColorPicker(!displayDarkColorPicker)
@@ -98,11 +105,20 @@ const Home: NextPage = () => {
     const name = event.target.name
     if (name === 'text') {
       setText(event.target.value)
+    } else if (name === 'src') {
+      setSrc(event.target.value)
     }
   }
 
   const handleChangeCheckbox = (event: any) => {
-    setIncludeOptions(event.target.checked)
+    const name = event.target.name
+    if (name === 'include-options') {
+      setIncludeOptions(event.target.checked)
+    } else if (name === 'include-logo') {
+      setIncludeLogo(event.target.checked)
+    } else if (name === 'include-logo-options') {
+      setIncludeLogoOptions(event.target.checked)
+    }
   }
 
   const handleChangeNumberInput = (event: any) => {
@@ -115,6 +131,12 @@ const Home: NextPage = () => {
       setScale(event.target.value)
     } else if (name === 'width') {
       setWidth(event.target.value)
+    } else if (name === 'width-logo') {
+      setWidthLogo(event.target.value)
+    } else if (name === 'x') {
+      setX(event.target.value)
+    } else if (name === 'y') {
+      setY(event.target.value)
     }
   }
 
@@ -133,22 +155,22 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Box bg={'black'} px={4} color="white">
+      <Box bg={'white'} px={4} color="black" borderBottom="1px solid #CCC">
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          <Box>next-qrcode</Box>
+          <Box>
+            <Text fontSize="2xl">next-qrcode</Text>
+          </Box>
           <Flex alignItems={'center'}>
             <Stack direction={'row'} spacing={7}>
-              <Box>
-                <span>
-                  <iframe
-                    src="https://ghbtns.com/github-btn.html?user=Bunlong&repo=next-qrcode&type=star&count=true"
-                    frameBorder="0"
-                    scrolling="0"
-                    width="80px"
-                    height="20px"
-                  ></iframe>
-                </span>
-              </Box>
+              <span>
+                <iframe
+                  src="https://ghbtns.com/github-btn.html?user=Bunlong&repo=next-qrcode&type=star&count=true&size=large"
+                  scrolling="0"
+                  width="170"
+                  height="30"
+                  title="GitHub"
+                ></iframe>
+              </span>
             </Stack>
           </Flex>
         </Flex>
@@ -157,7 +179,7 @@ const Home: NextPage = () => {
         <Stack spacing={6}>
           <Stack spacing={3}>
             <Box>
-              <label>Render as:</label>
+              <label>Render:</label>
             </Box>
             <Box>
               <Select
@@ -180,12 +202,17 @@ const Home: NextPage = () => {
               />
             </Box>
           </Stack>
+
           <Stack spacing={3} direction="row">
             <Box>
               <label>Include Options:</label>
             </Box>
             <Box style={{ marginTop: '4px' }}>
-              <Checkbox defaultChecked onChange={handleChangeCheckbox} />
+              <Checkbox
+                name="include-options"
+                defaultChecked
+                onChange={handleChangeCheckbox}
+              />
             </Box>
           </Stack>
           <Stack spacing={3}>
@@ -328,7 +355,7 @@ const Home: NextPage = () => {
                 </Stack>
                 <Stack spacing={3}>
                   <Box>
-                    <label>Dark color:</label>
+                    <label>Dark Color:</label>
                   </Box>
                   <Box>
                     <div style={disabled} onClick={handleClickDark}>
@@ -363,7 +390,7 @@ const Home: NextPage = () => {
                 </Stack>
                 <Stack spacing={3}>
                   <Box>
-                    <label>Light color:</label>
+                    <label>Light Color:</label>
                   </Box>
                   <Box>
                     <div style={disabled} onClick={handleClickLight}>
@@ -398,24 +425,243 @@ const Home: NextPage = () => {
                 </Stack>
               </Stack>
             </fieldset>
+          </Stack>
+          <Stack spacing={3}>
+            {selectedRenderAs.value === 'canvas' && (
+              <Stack spacing={6}>
+                <Stack spacing={3} direction="row">
+                  <Box>
+                    <label>Include Logo:</label>
+                  </Box>
+                  <Box style={{ marginTop: '4px' }}>
+                    <Checkbox
+                      isDisabled={!includeOptions}
+                      name="include-logo"
+                      defaultChecked
+                      onChange={handleChangeCheckbox}
+                    />
+                  </Box>
+                </Stack>
+                <fieldset
+                  style={{
+                    border: '1px solid #ccc',
+                    borderRadius: 5,
+                    padding: 20,
+                  }}
+                >
+                  <Stack spacing={3}>
+                    <Box>
+                      <label>Logo:</label>
+                    </Box>
+                    <Box>
+                      <fieldset
+                        style={{
+                          border: '1px solid #ccc',
+                          borderRadius: 5,
+                          padding: 20,
+                        }}
+                      >
+                        <Stack spacing={6}>
+                          <Stack spacing={3}>
+                            <Box>
+                              <label>Source:</label>
+                            </Box>
+                            <Box>
+                              <Input
+                                variant="outline"
+                                isDisabled={!includeOptions || !includeLogo}
+                                name="src"
+                                value={src}
+                                onChange={handleChange}
+                              />
+                            </Box>
+                          </Stack>
+                          <Stack spacing={3} direction="row">
+                            <Box>
+                              <label>Include Options:</label>
+                            </Box>
+                            <Box style={{ marginTop: '4px' }}>
+                              <Checkbox
+                                isDisabled={!includeOptions || !includeLogo}
+                                name="include-logo-options"
+                                defaultChecked
+                                onChange={handleChangeCheckbox}
+                              />
+                            </Box>
+                          </Stack>
+                          <Stack spacing={3}>
+                            <fieldset
+                              style={{
+                                border: '1px solid #ccc',
+                                borderRadius: 5,
+                                padding: 20,
+                              }}
+                            >
+                              <legend>Options</legend>
+                              <Stack spacing={6}>
+                                <Stack spacing={3}>
+                                  <Box>
+                                    <label>Width:</label>
+                                  </Box>
+                                  <Box>
+                                    <NumberInput
+                                      defaultValue={widthLogo}
+                                      min={0}
+                                      name="width-logo"
+                                      value={widthLogo}
+                                      isDisabled={
+                                        !includeLogoOptions ||
+                                        !includeOptions ||
+                                        !includeLogo
+                                      }
+                                      onChange={(value) =>
+                                        handleChangeNumberInput({
+                                          target: {
+                                            name: 'width-logo',
+                                            value,
+                                          },
+                                        })
+                                      }
+                                    >
+                                      <NumberInputField />
+                                      <NumberInputStepper>
+                                        <NumberIncrementStepper />
+                                        <NumberDecrementStepper />
+                                      </NumberInputStepper>
+                                    </NumberInput>
+                                  </Box>
+                                </Stack>
+                                <Stack spacing={3}>
+                                  <Box>
+                                    <label>X:</label>
+                                  </Box>
+                                  <Box>
+                                    <NumberInput
+                                      defaultValue={x}
+                                      min={0}
+                                      name="x"
+                                      value={x}
+                                      isDisabled={
+                                        !includeLogoOptions ||
+                                        !includeOptions ||
+                                        !includeLogo
+                                      }
+                                      onChange={(value) =>
+                                        handleChangeNumberInput({
+                                          target: { name: 'x', value },
+                                        })
+                                      }
+                                    >
+                                      <NumberInputField />
+                                      <NumberInputStepper>
+                                        <NumberIncrementStepper />
+                                        <NumberDecrementStepper />
+                                      </NumberInputStepper>
+                                    </NumberInput>
+                                  </Box>
+                                </Stack>
+                                <Stack spacing={3}>
+                                  <Box>
+                                    <label>Y:</label>
+                                  </Box>
+                                  <Box>
+                                    <NumberInput
+                                      defaultValue={y}
+                                      min={0}
+                                      name="y"
+                                      value={y}
+                                      isDisabled={
+                                        !includeLogoOptions ||
+                                        !includeOptions ||
+                                        !includeLogo
+                                      }
+                                      onChange={(value) =>
+                                        handleChangeNumberInput({
+                                          target: { name: 'y', value },
+                                        })
+                                      }
+                                    >
+                                      <NumberInputField />
+                                      <NumberInputStepper>
+                                        <NumberIncrementStepper />
+                                        <NumberDecrementStepper />
+                                      </NumberInputStepper>
+                                    </NumberInput>
+                                  </Box>
+                                </Stack>
+                              </Stack>
+                            </fieldset>
+                          </Stack>
+                        </Stack>
+                      </fieldset>
+                    </Box>
+                  </Stack>
+                </fieldset>
+              </Stack>
+            )}
+          </Stack>
+          <Stack>
             <Stack spacing={3} paddingTop={30} paddingBottom={30}>
               <Center>
                 <Box>
                   {selectedRenderAs.value === 'canvas' ? (
                     includeOptions ? (
-                      <Canvas
-                        text={text}
-                        options={{
-                          level: selectedLevel.value,
-                          margin: margin,
-                          scale: scale,
-                          width: width,
-                          color: {
-                            dark: darkColor,
-                            light: lightColor,
-                          },
-                        }}
-                      />
+                      includeLogo ? (
+                        includeLogoOptions ? (
+                          <Canvas
+                            text={text}
+                            options={{
+                              level: selectedLevel.value,
+                              margin: margin,
+                              scale: scale,
+                              width: width,
+                              color: {
+                                dark: darkColor,
+                                light: lightColor,
+                              },
+                            }}
+                            logo={{
+                              src: src,
+                              options: {
+                                width: widthLogo,
+                                x: x,
+                                y: y,
+                              },
+                            }}
+                          />
+                        ) : (
+                          <Canvas
+                            text={text}
+                            options={{
+                              level: selectedLevel.value,
+                              margin: margin,
+                              scale: scale,
+                              width: width,
+                              color: {
+                                dark: darkColor,
+                                light: lightColor,
+                              },
+                            }}
+                            logo={{
+                              src: src,
+                            }}
+                          />
+                        )
+                      ) : (
+                        <Canvas
+                          text={text}
+                          options={{
+                            level: selectedLevel.value,
+                            margin: margin,
+                            scale: scale,
+                            width: width,
+                            color: {
+                              dark: darkColor,
+                              light: lightColor,
+                            },
+                          }}
+                        />
+                      )
                     ) : (
                       <Canvas text={text} />
                     )
@@ -441,6 +687,8 @@ const Home: NextPage = () => {
                 </Box>
               </Center>
             </Stack>
+          </Stack>
+          <Stack>
             <Stack spacing={3}>
               <Box>
                 <pre>
@@ -464,11 +712,12 @@ function App() {
   return (
     ${
       selectedRenderAs.value === 'canvas'
-        ? `<Canvas
+        ? includeLogo
+          ? `<Canvas
       text='${text}'
       ${
         includeOptions
-          ? `options: {
+          ? `options: {{
         level: '${selectedLevel.value}',
         margin: ${margin},
         scale: ${scale},
@@ -477,15 +726,44 @@ function App() {
           dark: '${darkColor}',
           light: '${lightColor}',
         }
-      }`
+      }}
+      logo: {{
+        src: '${src}',
+        ${
+          includeLogoOptions
+            ? `options: {
+            width: ${widthLogo},
+            x: ${x},
+            y: ${y},
+        }`
+            : ''
+        }
+      }}`
           : ''
       }
     />`
+          : `<Canvas
+    text='${text}'
+    ${
+      includeOptions
+        ? `options: {{
+      level: '${selectedLevel.value}',
+      margin: ${margin},
+      scale: ${scale},
+      width: ${width},
+      color: {
+        dark: '${darkColor}',
+        light: '${lightColor}',
+      }
+    }}`
+        : ''
+    }
+  />`
         : `<Image
       text='${text}'
       ${
         includeOptions
-          ? `options: {
+          ? `options: {{
         type: 'image/jpeg',
         quality: 0.3,
         level: '${selectedLevel.value}',
@@ -496,7 +774,7 @@ function App() {
           dark: '${darkColor}',
           light: '${lightColor}',
         }
-      }`
+      }}`
           : ''
       }
     />`
