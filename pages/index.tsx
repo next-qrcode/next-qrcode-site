@@ -723,11 +723,11 @@ function App() {
         src: '${src}',
         ${
           includeLogoOptions
-            ? `options: {{
+            ? `options: {
             width: ${widthLogo},
             x: ${x},
             y: ${y},
-        }}`
+        }`
             : ''
         }
       }}`
