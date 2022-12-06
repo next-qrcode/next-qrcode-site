@@ -732,9 +732,9 @@ function App() {
         ${
           includeLogoOptions
             ? `options: {
-            width: ${widthLogo},
-            x: ${x},
-            y: ${y},
+          width: ${widthLogo},
+          x: ${x},
+          y: ${y},
         }`
             : ''
         }
