@@ -13,6 +13,7 @@ import {
   NumberDecrementStepper,
   Flex,
   Center,
+  Text,
 } from '@chakra-ui/react'
 import Select from 'react-select'
 import { SketchPicker } from 'react-color'
@@ -154,22 +155,22 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Box bg={'black'} px={4} color="white">
+      <Box bg={'white'} px={4} color="black" borderBottom="1px solid #CCC">
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          <Box>next-qrcode</Box>
+          <Box>
+            <Text fontSize="2xl">next-qrcode</Text>
+          </Box>
           <Flex alignItems={'center'}>
             <Stack direction={'row'} spacing={7}>
-              <Box>
-                <span>
-                  <iframe
-                    src="https://ghbtns.com/github-btn.html?user=Bunlong&repo=next-qrcode&type=star&count=true"
-                    frameBorder="0"
-                    scrolling="0"
-                    width="80px"
-                    height="20px"
-                  ></iframe>
-                </span>
-              </Box>
+              <span>
+                <iframe
+                  src="https://ghbtns.com/github-btn.html?user=Bunlong&repo=next-qrcode&type=star&count=true&size=large"
+                  scrolling="0"
+                  width="170"
+                  height="30"
+                  title="GitHub"
+                ></iframe>
+              </span>
             </Stack>
           </Flex>
         </Flex>
@@ -201,6 +202,7 @@ const Home: NextPage = () => {
               />
             </Box>
           </Stack>
+
           <Stack spacing={3} direction="row">
             <Box>
               <label>Include Options:</label>
@@ -423,6 +425,8 @@ const Home: NextPage = () => {
                 </Stack>
               </Stack>
             </fieldset>
+          </Stack>
+          <Stack spacing={3}>
             {selectedRenderAs.value === 'canvas' && (
               <Stack spacing={6}>
                 <Stack spacing={3} direction="row">
@@ -595,6 +599,8 @@ const Home: NextPage = () => {
                 </fieldset>
               </Stack>
             )}
+          </Stack>
+          <Stack>
             <Stack spacing={3} paddingTop={30} paddingBottom={30}>
               <Center>
                 <Box>
@@ -681,6 +687,8 @@ const Home: NextPage = () => {
                 </Box>
               </Center>
             </Stack>
+          </Stack>
+          <Stack>
             <Stack spacing={3}>
               <Box>
                 <pre>
