@@ -602,28 +602,47 @@ const Home: NextPage = () => {
                 <Box>
                   {selectedRenderAs.value === 'canvas' ? (
                     includeOptions ? (
-                      includeLogoOptions ? (
-                        <Canvas
-                          text={text}
-                          options={{
-                            level: selectedLevel.value,
-                            margin: margin,
-                            scale: scale,
-                            width: width,
-                            color: {
-                              dark: darkColor,
-                              light: lightColor,
-                            },
-                          }}
-                          logo={{
-                            src: src,
-                            options: {
-                              width: widthLogo,
-                              x: x,
-                              y: y,
-                            },
-                          }}
-                        />
+                      includeLogo ? (
+                        includeLogoOptions ? (
+                          <Canvas
+                            text={text}
+                            options={{
+                              level: selectedLevel.value,
+                              margin: margin,
+                              scale: scale,
+                              width: width,
+                              color: {
+                                dark: darkColor,
+                                light: lightColor,
+                              },
+                            }}
+                            logo={{
+                              src: src,
+                              options: {
+                                width: widthLogo,
+                                x: x,
+                                y: y,
+                              },
+                            }}
+                          />
+                        ) : (
+                          <Canvas
+                            text={text}
+                            options={{
+                              level: selectedLevel.value,
+                              margin: margin,
+                              scale: scale,
+                              width: width,
+                              color: {
+                                dark: darkColor,
+                                light: lightColor,
+                              },
+                            }}
+                            logo={{
+                              src: src,
+                            }}
+                          />
+                        )
                       ) : (
                         <Canvas
                           text={text}
