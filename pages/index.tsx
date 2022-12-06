@@ -57,9 +57,7 @@ const Home: NextPage = () => {
   const [width, setWidth] = useState(150)
   const [includeOptions, setIncludeOptions] = useState(true)
   const { Canvas, Image } = useQRCode()
-  const [src, setSrc] = useState(
-    'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'
-  )
+  const [src, setSrc] = useState('https://next-qrcode.js.org/github.png')
   const [includeLogo, setIncludeLogo] = useState(true)
   const [includeLogoOptions, setIncludeLogoOptions] = useState(true)
   const [widthLogo, setWidthLogo] = useState(35)
@@ -423,180 +421,180 @@ const Home: NextPage = () => {
                     ) : null}
                   </Box>
                 </Stack>
-                {selectedRenderAs.value === 'canvas' && (
-                  <>
-                    <Stack spacing={3} direction="row">
-                      <Box>
-                        <label>Include Logo:</label>
-                      </Box>
-                      <Box style={{ marginTop: '4px' }}>
-                        <Checkbox
-                          isDisabled={!includeOptions}
-                          name="include-logo"
-                          defaultChecked
-                          onChange={handleChangeCheckbox}
-                        />
-                      </Box>
-                    </Stack>
-                    <fieldset
-                      style={{
-                        border: '1px solid #ccc',
-                        borderRadius: 5,
-                        padding: 20,
-                      }}
-                    >
-                      <Stack spacing={3}>
-                        <Box>
-                          <label>Logo:</label>
-                        </Box>
-                        <Box>
-                          <fieldset
-                            style={{
-                              border: '1px solid #ccc',
-                              borderRadius: 5,
-                              padding: 20,
-                            }}
-                          >
-                            <Stack spacing={6}>
-                              <Stack spacing={3}>
-                                <Box>
-                                  <label>Source:</label>
-                                </Box>
-                                <Box>
-                                  <Input
-                                    variant="outline"
-                                    isDisabled={!includeOptions || !includeLogo}
-                                    name="src"
-                                    value={src}
-                                    onChange={handleChange}
-                                  />
-                                </Box>
-                              </Stack>
-                              <Stack spacing={3} direction="row">
-                                <Box>
-                                  <label>Include Options:</label>
-                                </Box>
-                                <Box style={{ marginTop: '4px' }}>
-                                  <Checkbox
-                                    isDisabled={!includeOptions || !includeLogo}
-                                    name="include-logo-options"
-                                    defaultChecked
-                                    onChange={handleChangeCheckbox}
-                                  />
-                                </Box>
-                              </Stack>
-                              <Stack spacing={3}>
-                                <fieldset
-                                  style={{
-                                    border: '1px solid #ccc',
-                                    borderRadius: 5,
-                                    padding: 20,
-                                  }}
-                                >
-                                  <legend>Options</legend>
-                                  <Stack spacing={6}>
-                                    <Stack spacing={3}>
-                                      <Box>
-                                        <label>Width:</label>
-                                      </Box>
-                                      <Box>
-                                        <NumberInput
-                                          defaultValue={widthLogo}
-                                          min={0}
-                                          name="width-logo"
-                                          value={widthLogo}
-                                          isDisabled={
-                                            !includeLogoOptions ||
-                                            !includeOptions ||
-                                            !includeLogo
-                                          }
-                                          onChange={(value) =>
-                                            handleChangeNumberInput({
-                                              target: {
-                                                name: 'width-logo',
-                                                value,
-                                              },
-                                            })
-                                          }
-                                        >
-                                          <NumberInputField />
-                                          <NumberInputStepper>
-                                            <NumberIncrementStepper />
-                                            <NumberDecrementStepper />
-                                          </NumberInputStepper>
-                                        </NumberInput>
-                                      </Box>
-                                    </Stack>
-                                    <Stack spacing={3}>
-                                      <Box>
-                                        <label>X:</label>
-                                      </Box>
-                                      <Box>
-                                        <NumberInput
-                                          defaultValue={x}
-                                          min={0}
-                                          name="x"
-                                          value={x}
-                                          isDisabled={
-                                            !includeLogoOptions ||
-                                            !includeOptions ||
-                                            !includeLogo
-                                          }
-                                          onChange={(value) =>
-                                            handleChangeNumberInput({
-                                              target: { name: 'x', value },
-                                            })
-                                          }
-                                        >
-                                          <NumberInputField />
-                                          <NumberInputStepper>
-                                            <NumberIncrementStepper />
-                                            <NumberDecrementStepper />
-                                          </NumberInputStepper>
-                                        </NumberInput>
-                                      </Box>
-                                    </Stack>
-                                    <Stack spacing={3}>
-                                      <Box>
-                                        <label>Y:</label>
-                                      </Box>
-                                      <Box>
-                                        <NumberInput
-                                          defaultValue={y}
-                                          min={0}
-                                          name="y"
-                                          value={y}
-                                          isDisabled={
-                                            !includeLogoOptions ||
-                                            !includeOptions ||
-                                            !includeLogo
-                                          }
-                                          onChange={(value) =>
-                                            handleChangeNumberInput({
-                                              target: { name: 'y', value },
-                                            })
-                                          }
-                                        >
-                                          <NumberInputField />
-                                          <NumberInputStepper>
-                                            <NumberIncrementStepper />
-                                            <NumberDecrementStepper />
-                                          </NumberInputStepper>
-                                        </NumberInput>
-                                      </Box>
-                                    </Stack>
-                                  </Stack>
-                                </fieldset>
-                              </Stack>
-                            </Stack>
-                          </fieldset>
-                        </Box>
-                      </Stack>
-                    </fieldset>
-                  </>
-                )}
               </Stack>
             </fieldset>
+            {selectedRenderAs.value === 'canvas' && (
+              <Stack spacing={6}>
+                <Stack spacing={3} direction="row">
+                  <Box>
+                    <label>Include Logo:</label>
+                  </Box>
+                  <Box style={{ marginTop: '4px' }}>
+                    <Checkbox
+                      isDisabled={!includeOptions}
+                      name="include-logo"
+                      defaultChecked
+                      onChange={handleChangeCheckbox}
+                    />
+                  </Box>
+                </Stack>
+                <fieldset
+                  style={{
+                    border: '1px solid #ccc',
+                    borderRadius: 5,
+                    padding: 20,
+                  }}
+                >
+                  <Stack spacing={3}>
+                    <Box>
+                      <label>Logo:</label>
+                    </Box>
+                    <Box>
+                      <fieldset
+                        style={{
+                          border: '1px solid #ccc',
+                          borderRadius: 5,
+                          padding: 20,
+                        }}
+                      >
+                        <Stack spacing={6}>
+                          <Stack spacing={3}>
+                            <Box>
+                              <label>Source:</label>
+                            </Box>
+                            <Box>
+                              <Input
+                                variant="outline"
+                                isDisabled={!includeOptions || !includeLogo}
+                                name="src"
+                                value={src}
+                                onChange={handleChange}
+                              />
+                            </Box>
+                          </Stack>
+                          <Stack spacing={3} direction="row">
+                            <Box>
+                              <label>Include Options:</label>
+                            </Box>
+                            <Box style={{ marginTop: '4px' }}>
+                              <Checkbox
+                                isDisabled={!includeOptions || !includeLogo}
+                                name="include-logo-options"
+                                defaultChecked
+                                onChange={handleChangeCheckbox}
+                              />
+                            </Box>
+                          </Stack>
+                          <Stack spacing={3}>
+                            <fieldset
+                              style={{
+                                border: '1px solid #ccc',
+                                borderRadius: 5,
+                                padding: 20,
+                              }}
+                            >
+                              <legend>Options</legend>
+                              <Stack spacing={6}>
+                                <Stack spacing={3}>
+                                  <Box>
+                                    <label>Width:</label>
+                                  </Box>
+                                  <Box>
+                                    <NumberInput
+                                      defaultValue={widthLogo}
+                                      min={0}
+                                      name="width-logo"
+                                      value={widthLogo}
+                                      isDisabled={
+                                        !includeLogoOptions ||
+                                        !includeOptions ||
+                                        !includeLogo
+                                      }
+                                      onChange={(value) =>
+                                        handleChangeNumberInput({
+                                          target: {
+                                            name: 'width-logo',
+                                            value,
+                                          },
+                                        })
+                                      }
+                                    >
+                                      <NumberInputField />
+                                      <NumberInputStepper>
+                                        <NumberIncrementStepper />
+                                        <NumberDecrementStepper />
+                                      </NumberInputStepper>
+                                    </NumberInput>
+                                  </Box>
+                                </Stack>
+                                <Stack spacing={3}>
+                                  <Box>
+                                    <label>X:</label>
+                                  </Box>
+                                  <Box>
+                                    <NumberInput
+                                      defaultValue={x}
+                                      min={0}
+                                      name="x"
+                                      value={x}
+                                      isDisabled={
+                                        !includeLogoOptions ||
+                                        !includeOptions ||
+                                        !includeLogo
+                                      }
+                                      onChange={(value) =>
+                                        handleChangeNumberInput({
+                                          target: { name: 'x', value },
+                                        })
+                                      }
+                                    >
+                                      <NumberInputField />
+                                      <NumberInputStepper>
+                                        <NumberIncrementStepper />
+                                        <NumberDecrementStepper />
+                                      </NumberInputStepper>
+                                    </NumberInput>
+                                  </Box>
+                                </Stack>
+                                <Stack spacing={3}>
+                                  <Box>
+                                    <label>Y:</label>
+                                  </Box>
+                                  <Box>
+                                    <NumberInput
+                                      defaultValue={y}
+                                      min={0}
+                                      name="y"
+                                      value={y}
+                                      isDisabled={
+                                        !includeLogoOptions ||
+                                        !includeOptions ||
+                                        !includeLogo
+                                      }
+                                      onChange={(value) =>
+                                        handleChangeNumberInput({
+                                          target: { name: 'y', value },
+                                        })
+                                      }
+                                    >
+                                      <NumberInputField />
+                                      <NumberInputStepper>
+                                        <NumberIncrementStepper />
+                                        <NumberDecrementStepper />
+                                      </NumberInputStepper>
+                                    </NumberInput>
+                                  </Box>
+                                </Stack>
+                              </Stack>
+                            </fieldset>
+                          </Stack>
+                        </Stack>
+                      </fieldset>
+                    </Box>
+                  </Stack>
+                </fieldset>
+              </Stack>
+            )}
             <Stack spacing={3} paddingTop={30} paddingBottom={30}>
               <Center>
                 <Box>
@@ -706,11 +704,12 @@ function App() {
   return (
     ${
       selectedRenderAs.value === 'canvas'
-        ? `<Canvas
+        ? includeLogo
+          ? `<Canvas
       text='${text}'
       ${
         includeOptions
-          ? `options: {
+          ? `options: {{
         level: '${selectedLevel.value}',
         margin: ${margin},
         scale: ${scale},
@@ -719,15 +718,44 @@ function App() {
           dark: '${darkColor}',
           light: '${lightColor}',
         }
-      }`
+      }}
+      logo: {{
+        src: '${src}',
+        ${
+          includeLogoOptions
+            ? `options: {{
+            width: ${widthLogo},
+            x: ${x},
+            y: ${y},
+        }}`
+            : ''
+        }
+      }}`
           : ''
       }
     />`
+          : `<Canvas
+    text='${text}'
+    ${
+      includeOptions
+        ? `options: {{
+      level: '${selectedLevel.value}',
+      margin: ${margin},
+      scale: ${scale},
+      width: ${width},
+      color: {
+        dark: '${darkColor}',
+        light: '${lightColor}',
+      }
+    }}`
+        : ''
+    }
+  />`
         : `<Image
       text='${text}'
       ${
         includeOptions
-          ? `options: {
+          ? `options: {{
         type: 'image/jpeg',
         quality: 0.3,
         level: '${selectedLevel.value}',
@@ -738,7 +766,7 @@ function App() {
           dark: '${darkColor}',
           light: '${lightColor}',
         }
-      }`
+      }}`
           : ''
       }
     />`
