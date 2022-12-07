@@ -16,10 +16,6 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <title>
-            next-qrcode - React hooks for generating QRCode for your next React
-            apps
-          </title>
           <meta
             name="description"
             content="React hooks for generating QRCode for your next React apps"
