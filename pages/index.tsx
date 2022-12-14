@@ -19,7 +19,6 @@ import Select from 'react-select'
 import { SketchPicker } from 'react-color'
 import { useQRCode } from 'next-qrcode'
 import { usePrism } from 'next-prism'
-import Prism from 'prismjs'
 
 import 'next-prism/themes/tomorrow.css'
 
@@ -42,7 +41,7 @@ const renderAsOptions = [
 ]
 
 const Home: NextPage = () => {
-  const { Code } = usePrism()
+  const { Code, highlightAll } = usePrism()
   const { Canvas, Image } = useQRCode()
   const [selectedType, setSelectedType] = useState({
     value: 'image/png',
@@ -127,7 +126,7 @@ const Home: NextPage = () => {
   }
 
   useEffect(() => {
-    Prism.highlightAll()
+    highlightAll()
   }, [
     selectedType,
     selectedLevel,
