@@ -1,4 +1,4 @@
-import React, { useState, CSSProperties } from 'react'
+import React, { useState, CSSProperties, useEffect } from 'react'
 import type { NextPage } from 'next'
 import {
   Container,
@@ -18,6 +18,10 @@ import {
 import Select from 'react-select'
 import { SketchPicker } from 'react-color'
 import { useQRCode } from 'next-qrcode'
+import { usePrism } from 'next-prism'
+import Prism from 'prismjs'
+
+import 'next-prism/themes/tomorrow.css'
 
 const typeOptions = [
   { value: 'image/png', label: 'image/png' },
@@ -38,6 +42,8 @@ const renderAsOptions = [
 ]
 
 const Home: NextPage = () => {
+  const { Code } = usePrism()
+  const { Canvas, Image } = useQRCode()
   const [selectedType, setSelectedType] = useState({
     value: 'image/png',
     label: 'image/png',
@@ -57,7 +63,6 @@ const Home: NextPage = () => {
   const [quality, setQuality] = useState(0.3)
   const [width, setWidth] = useState(150)
   const [includeOptions, setIncludeOptions] = useState(true)
-  const { Canvas, Image } = useQRCode()
   const [src, setSrc] = useState('https://next-qrcode.js.org/github.png')
   const [includeLogo, setIncludeLogo] = useState(true)
   const [includeLogoOptions, setIncludeLogoOptions] = useState(true)
@@ -120,6 +125,30 @@ const Home: NextPage = () => {
       setIncludeLogoOptions(event.target.checked)
     }
   }
+
+  useEffect(() => {
+    Prism.highlightAll()
+  }, [
+    selectedType,
+    selectedLevel,
+    selectedRenderAs,
+    displayDarkColorPicker,
+    darkColor,
+    displayLightColorPicker,
+    lightColor,
+    text,
+    margin,
+    scale,
+    quality,
+    width,
+    includeOptions,
+    src,
+    includeLogo,
+    includeLogoOptions,
+    widthLogo,
+    x,
+    y,
+  ])
 
   const handleChangeNumberInput = (event: any) => {
     const name = event.target.name
@@ -681,17 +710,8 @@ const Home: NextPage = () => {
           <Stack>
             <Stack spacing={3}>
               <Box>
-                <pre>
-                  <code
-                    style={{
-                      backgroundColor: '#eee',
-                      border: '1px solid #999',
-                      display: 'block',
-                      padding: '20px',
-                      borderRadius: '5px',
-                    }}
-                  >
-                    {`import React from 'react';
+                <Code language="javascript">
+                  {`import React from 'react';
 import { useQRCode } from 'next-qrcode';
 
 function App() {
@@ -773,8 +793,7 @@ function App() {
 }
 
 export default App;`}
-                  </code>
-                </pre>
+                </Code>
               </Box>
             </Stack>
           </Stack>
