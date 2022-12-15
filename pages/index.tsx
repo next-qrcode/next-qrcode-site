@@ -37,12 +37,13 @@ const levelOptions = [
 
 const renderAsOptions = [
   { value: 'canvas', label: 'Canvas' },
+  { value: 'svg', label: 'SVG' },
   { value: 'img', label: 'Image' },
 ]
 
 const Home: NextPage = () => {
   const { Code, highlightAll } = usePrism()
-  const { Canvas, Image } = useQRCode()
+  const { Canvas, SVG, Image } = useQRCode()
   const [selectedType, setSelectedType] = useState({
     value: 'image/png',
     label: 'image/png',
@@ -622,8 +623,8 @@ const Home: NextPage = () => {
             <Stack spacing={3} paddingTop={30} paddingBottom={30}>
               <Center>
                 <Box>
-                  {selectedRenderAs.value === 'canvas' ? (
-                    includeOptions ? (
+                  {selectedRenderAs.value === 'canvas' &&
+                    (includeOptions ? (
                       includeLogo ? (
                         includeLogoOptions ? (
                           <Canvas
@@ -682,26 +683,27 @@ const Home: NextPage = () => {
                       )
                     ) : (
                       <Canvas text={text} />
-                    )
-                  ) : includeOptions ? (
-                    <Image
-                      text={text}
-                      options={{
-                        type: selectedType.value,
-                        quality: quality,
-                        level: selectedLevel.value,
-                        margin: margin,
-                        scale: scale,
-                        width: width,
-                        color: {
-                          dark: darkColor,
-                          light: lightColor,
-                        },
-                      }}
-                    />
-                  ) : (
-                    <Image text={text} />
-                  )}
+                    ))}
+                  {selectedRenderAs.value === 'img' &&
+                    (includeOptions ? (
+                      <Image
+                        text={text}
+                        options={{
+                          type: selectedType.value,
+                          quality: quality,
+                          level: selectedLevel.value,
+                          margin: margin,
+                          scale: scale,
+                          width: width,
+                          color: {
+                            dark: darkColor,
+                            light: lightColor,
+                          },
+                        }}
+                      />
+                    ) : (
+                      <Image text={text} />
+                    ))}
                 </Box>
               </Center>
             </Stack>
