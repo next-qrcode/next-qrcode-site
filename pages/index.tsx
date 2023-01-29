@@ -67,8 +67,8 @@ const Home: NextPage = () => {
   const [includeLogo, setIncludeLogo] = useState(true)
   const [includeLogoOptions, setIncludeLogoOptions] = useState(true)
   const [widthLogo, setWidthLogo] = useState(35)
-  const [x, setX] = useState(0)
-  const [y, setY] = useState(0)
+  const [x, setX] = useState(1)
+  const [y, setY] = useState(1)
   const [centerLogo, setCenterLogo] = useState(true)
 
   const handleClickDark = () => {
@@ -126,6 +126,13 @@ const Home: NextPage = () => {
       setIncludeLogoOptions(event.target.checked)
     } else if (name === 'center-logo') {
       setCenterLogo(event.target.checked)
+      if (centerLogo) {
+        setX(1)
+        setY(1)
+      } else {
+        setX(0)
+        setY(0)
+      }
     }
   }
 
@@ -560,6 +567,11 @@ const Home: NextPage = () => {
                                 </Box>
                                 <Box style={{ marginTop: '4px' }}>
                                   <Checkbox
+                                    isDisabled={
+                                      !includeLogoOptions ||
+                                      !includeOptions ||
+                                      !includeLogo
+                                    }
                                     name="center-logo"
                                     defaultChecked
                                     onChange={handleChangeCheckbox}
@@ -777,22 +789,22 @@ function App() {
       }
     />`
           : `<Canvas
-    text='${text}'
-    ${
-      includeOptions
-        ? `options: {{
-      level: '${selectedLevel.value}',
-      margin: ${margin},
-      scale: ${scale},
-      width: ${width},
-      color: {
-        dark: '${darkColor}',
-        light: '${lightColor}',
-      }
-    }}`
+      text='${text}'
+      ${
+        includeOptions
+          ? `options: {{
+        level: '${selectedLevel.value}',
+        margin: ${margin},
+        scale: ${scale},
+        width: ${width},
+        color: {
+          dark: '${darkColor}',
+          light: '${lightColor}',
+        }
+      }}`
         : ''
     }
-  />`
+    />`
         : `<Image
       text='${text}'
       ${
