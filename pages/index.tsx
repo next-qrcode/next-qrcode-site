@@ -209,18 +209,18 @@ const Home: NextPage = () => {
   if (selectedRenderAs.value === 'canvas') {
     if (includeLogoOptions) {
       includeLogoOptionsStr = `options: {
-            width: ${widthLogo},
-            x: ${x},
-            y: ${y},
-          },`
+          width: ${widthLogo},
+          x: ${x},
+          y: ${y},
+        },`
     }
   
     if (includeLogo) {
       if (includeLogoOptions) {
         logoStr = `logo={{
-          src: '${src}',
-          ${includeLogoOptionsStr}
-        }}`
+        src: '${src}',
+        ${includeLogoOptionsStr}
+      }}`
       } else {
         logoStr = `logo={{
           src: '${src}',
@@ -230,15 +230,15 @@ const Home: NextPage = () => {
   
     if (includeOptions) {
       includeOptionsStr = `options={{
-          level: '${selectedLevel.value}',
-          margin: ${margin},
-          scale: ${scale},
-          width: ${width},
-          color: {
-            dark: '${darkColor}',
-            light: '${lightColor}',
-          },
-        }}`
+        level: '${selectedLevel.value}',
+        margin: ${margin},
+        scale: ${scale},
+        width: ${width},
+        color: {
+          dark: '${darkColor}',
+          light: '${lightColor}',
+        },
+      }}`
     }
 
     if (includeOptionsStr) {
@@ -252,7 +252,7 @@ const Home: NextPage = () => {
         componentStr = `<Canvas
       text='${text}'
       ${includeOptionsStr}
-  />`
+    />`
       }
     } else {
       if (includeLogo) {
@@ -277,12 +277,38 @@ const Home: NextPage = () => {
           light: '${lightColor}',
         },
       }}`
-    }
 
-    componentStr = `<SVG
+      componentStr = `<SVG
       text='${text}'
       ${includeOptionsStr}
     />`
+    } else {
+      componentStr = `<SVG
+      text='${text}'
+    />`
+    }
+  } else if (selectedRenderAs.value === 'img') {
+    if (includeOptions) {
+      includeOptionsStr = `options={{
+        level: '${selectedLevel.value}',
+        margin: ${margin},
+        scale: ${scale},
+        width: ${width},
+        color: {
+          dark: '${darkColor}',
+          light: '${lightColor}',
+        },
+      }}`
+      
+      componentStr = `<Image
+      text='${text}'
+      ${includeOptionsStr}
+    />`
+    } else {
+      componentStr = `<Image
+      text='${text}'
+    />`
+    }
   }
 
   return (
