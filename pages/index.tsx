@@ -67,8 +67,8 @@ const Home: NextPage = () => {
   const [includeLogo, setIncludeLogo] = useState(true)
   const [includeLogoOptions, setIncludeLogoOptions] = useState(true)
   const [widthLogo, setWidthLogo] = useState(35)
-  const [x, setX] = useState(1)
-  const [y, setY] = useState(1)
+  const [x, setX] = useState(0)
+  const [y, setY] = useState(0)
   const [centerLogo, setCenterLogo] = useState(true)
 
   const handleClickDark = () => {
@@ -192,6 +192,87 @@ const Home: NextPage = () => {
     !includeOptions ? { pointerEvents: 'none', opacity: 0.7 } : {}
   ) as CSSProperties
 
+  let selectedRenderAsStr = ''
+  let componentStr = ''
+  let includeOptionsStr = ''
+  let logoStr = ''
+  let includeLogoOptionsStr = ''
+  
+  if (selectedRenderAs.value === 'canvas') {
+    selectedRenderAsStr = 'Canvas'
+  } else if (selectedRenderAs.value === 'svg') {
+    selectedRenderAsStr = 'SVG'
+  } else {
+    selectedRenderAsStr = 'Image'
+  }
+
+  if (includeLogoOptions) {
+    includeLogoOptionsStr = `options: {
+          width: ${widthLogo},
+          x: ${x},
+          y: ${y},
+        },`
+  }
+
+  if (includeLogo) {
+    if (includeLogoOptions) {
+      logoStr = `logo={{
+        src: '${src}',
+        ${includeLogoOptionsStr}
+      }}`
+    } else {
+      logoStr = `logo={{
+        src: '${src}',
+      }}`
+    }
+  }
+
+  if (includeOptions) {
+    includeOptionsStr = `options={{
+        level: '${selectedLevel.value}',
+        margin: ${margin},
+        scale: ${scale},
+        width: ${width},
+        color: {
+          dark: '${darkColor}',
+          light: '${lightColor}',
+        },
+      }}`
+  }
+
+  if (selectedRenderAs.value === 'canvas') {
+    if (includeOptionsStr) {
+      if (includeLogo) {
+        componentStr = `<Canvas
+      text='${text}'
+      ${includeOptionsStr}
+      ${logoStr}
+    />`
+      } else {
+        componentStr = `<Canvas
+      text='${text}'
+      ${includeOptionsStr}
+  />`
+      }
+    } else {
+      if (includeLogo) {
+        componentStr = `<Canvas
+      text='${text}'
+      ${logoStr}
+    />`
+      } else {
+        componentStr = `<Canvas
+      text='${text}'
+    />`
+      }
+    }
+
+  } else if (selectedRenderAs.value === 'svg') {
+    componentStr = `<SVG
+      text='${text}'
+    />`
+  }
+
   return (
     <>
       <Box bg={'white'} px={4} color="black" borderBottom="1px solid #CCC">
@@ -260,7 +341,7 @@ const Home: NextPage = () => {
             >
               <legend>Options</legend>
               <Stack spacing={6}>
-                {selectedRenderAs.value !== 'canvas' && (
+                {selectedRenderAs.value !== 'canvas' && selectedRenderAs.value !== 'svg' && (
                   <>
                     <Stack spacing={3}>
                       <Box>
@@ -304,19 +385,21 @@ const Home: NextPage = () => {
                     </Stack>
                   </>
                 )}
-                <Stack spacing={3}>
-                  <Box>
-                    <label>Level:</label>
-                  </Box>
-                  <Box>
-                    <Select
-                      value={selectedLevel}
-                      onChange={handleChangeLevel}
-                      options={levelOptions}
-                      isDisabled={!includeOptions}
-                    />
-                  </Box>
-                </Stack>
+                {selectedRenderAs.value !== 'svg' && (
+                  <Stack spacing={3}>
+                    <Box>
+                      <label>Level:</label>
+                    </Box>
+                    <Box>
+                      <Select
+                        value={selectedLevel}
+                        onChange={handleChangeLevel}
+                        options={levelOptions}
+                        isDisabled={!includeOptions}
+                      />
+                    </Box>
+                  </Stack>
+                )}
                 <Stack spacing={3}>
                   <Box>
                     <label>Margin:</label>
@@ -342,7 +425,8 @@ const Home: NextPage = () => {
                     </NumberInput>
                   </Box>
                 </Stack>
-                <Stack spacing={3}>
+                {selectedRenderAs.value !== 'svg' && (
+                  <Stack spacing={3}>
                   <Box>
                     <label>Scale:</label>
                   </Box>
@@ -367,6 +451,7 @@ const Home: NextPage = () => {
                     </NumberInput>
                   </Box>
                 </Stack>
+                )}
                 <Stack spacing={3}>
                   <Box>
                     <label>Width:</label>
@@ -474,7 +559,6 @@ const Home: NextPage = () => {
                   </Box>
                   <Box style={{ marginTop: '4px' }}>
                     <Checkbox
-                      isDisabled={!includeOptions}
                       name="include-logo"
                       defaultChecked
                       onChange={handleChangeCheckbox}
@@ -499,7 +583,7 @@ const Home: NextPage = () => {
                           <Box>
                             <Input
                               variant="outline"
-                              isDisabled={!includeOptions || !includeLogo}
+                              isDisabled={!includeLogo}
                               name="src"
                               value={src}
                               onChange={handleChange}
@@ -512,7 +596,7 @@ const Home: NextPage = () => {
                           </Box>
                           <Box style={{ marginTop: '4px' }}>
                             <Checkbox
-                              isDisabled={!includeOptions || !includeLogo}
+                              isDisabled={!includeLogo}
                               name="include-logo-options"
                               defaultChecked
                               onChange={handleChangeCheckbox}
@@ -541,7 +625,6 @@ const Home: NextPage = () => {
                                     value={widthLogo}
                                     isDisabled={
                                       !includeLogoOptions ||
-                                      !includeOptions ||
                                       !includeLogo
                                     }
                                     onChange={(value) =>
@@ -569,7 +652,6 @@ const Home: NextPage = () => {
                                   <Checkbox
                                     isDisabled={
                                       !includeLogoOptions ||
-                                      !includeOptions ||
                                       !includeLogo
                                     }
                                     name="center-logo"
@@ -594,7 +676,6 @@ const Home: NextPage = () => {
                                       value={x}
                                       isDisabled={
                                         !includeLogoOptions ||
-                                        !includeOptions ||
                                         !includeLogo ||
                                         centerLogo
                                       }
@@ -625,7 +706,6 @@ const Home: NextPage = () => {
                                     value={y}
                                     isDisabled={
                                       !includeLogoOptions ||
-                                      !includeOptions ||
                                       !includeLogo ||
                                       centerLogo
                                     }
@@ -739,6 +819,22 @@ const Home: NextPage = () => {
                     ) : (
                       <Image text={text} />
                     ))}
+                  {selectedRenderAs.value === 'svg' &&
+                    (includeOptions ? (
+                      <SVG
+                        text={text}
+                        options={{
+                          margin: margin,
+                          width: width,
+                          color: {
+                            dark: darkColor,
+                            light: lightColor,
+                          },
+                        }}
+                      />
+                    ) : (
+                      <Image text={text} />
+                    ))}
                 </Box>
               </Center>
             </Stack>
@@ -746,7 +842,20 @@ const Home: NextPage = () => {
           <Stack>
             <Stack spacing={3}>
               <Box>
-                <Code language="javascript">
+              <Code language="javascript">
+                {`import React from 'react';
+import { useQRCode } from 'next-qrcode';
+
+function App() {
+  const { ${selectedRenderAsStr} } = useQRCode();
+
+  return (
+    ${componentStr}
+  );
+}
+`}
+              </Code>
+                {/* <Code language="javascript">
                   {`import React from 'react';
 import { useQRCode } from 'next-qrcode';
 
@@ -758,7 +867,7 @@ function App() {
   return (
     ${
       selectedRenderAs.value === 'canvas'
-        ? includeLogo
+        && includeLogo
           ? `<Canvas
       text='${text}'
       ${
@@ -805,31 +914,12 @@ function App() {
         : ''
     }
     />`
-        : `<Image
-      text='${text}'
-      ${
-        includeOptions
-          ? `options: {{
-        type: 'image/jpeg',
-        quality: 0.3,
-        level: '${selectedLevel.value}',
-        margin: ${margin},
-        scale: ${scale},
-        width: ${width},
-        color: {
-          dark: '${darkColor}',
-          light: '${lightColor}',
-        }
-      }}`
-          : ''
-      }
-    />`
     }
   );
 }
 
 export default App;`}
-                </Code>
+                </Code> */}
               </Box>
             </Stack>
           </Stack>
