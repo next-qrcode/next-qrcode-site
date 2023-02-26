@@ -197,7 +197,7 @@ const Home: NextPage = () => {
   let includeOptionsStr = ''
   let logoStr = ''
   let includeLogoOptionsStr = ''
-  
+
   if (selectedRenderAs.value === 'canvas') {
     selectedRenderAsStr = 'Canvas'
   } else if (selectedRenderAs.value === 'svg') {
@@ -214,7 +214,7 @@ const Home: NextPage = () => {
           y: ${y},
         },`
     }
-  
+
     if (includeLogo) {
       if (includeLogoOptions) {
         logoStr = `logo={{
@@ -227,7 +227,7 @@ const Home: NextPage = () => {
       }}`
       }
     }
-  
+
     if (includeOptions) {
       includeOptionsStr = `options={{
         level: '${selectedLevel.value}',
@@ -266,7 +266,6 @@ const Home: NextPage = () => {
     />`
       }
     }
-
   } else if (selectedRenderAs.value === 'svg') {
     if (includeOptions) {
       includeOptionsStr = `options={{
@@ -299,7 +298,7 @@ const Home: NextPage = () => {
           light: '${lightColor}',
         },
       }}`
-      
+
       componentStr = `<Image
       text='${text}'
       ${includeOptionsStr}
@@ -379,50 +378,51 @@ const Home: NextPage = () => {
             >
               <legend>Options</legend>
               <Stack spacing={6}>
-                {selectedRenderAs.value !== 'canvas' && selectedRenderAs.value !== 'svg' && (
-                  <>
-                    <Stack spacing={3}>
-                      <Box>
-                        <label>Type:</label>
-                      </Box>
-                      <Box>
-                        <Select
-                          value={selectedType}
-                          onChange={handleChangeType}
-                          options={typeOptions}
-                          isDisabled={!includeOptions}
-                        />
-                      </Box>
-                    </Stack>
-                    <Stack spacing={3}>
-                      <Box>
-                        <label>Quality:</label>
-                      </Box>
-                      <Box>
-                        <NumberInput
-                          defaultValue={quality}
-                          min={0}
-                          max={1}
-                          step={0.1}
-                          name="quality"
-                          value={quality}
-                          onChange={(value) =>
-                            handleChangeNumberInput({
-                              target: { name: 'quality', value },
-                            })
-                          }
-                          isDisabled={includeOptions ? false : true}
-                        >
-                          <NumberInputField />
-                          <NumberInputStepper>
-                            <NumberIncrementStepper />
-                            <NumberDecrementStepper />
-                          </NumberInputStepper>
-                        </NumberInput>
-                      </Box>
-                    </Stack>
-                  </>
-                )}
+                {selectedRenderAs.value !== 'canvas' &&
+                  selectedRenderAs.value !== 'svg' && (
+                    <>
+                      <Stack spacing={3}>
+                        <Box>
+                          <label>Type:</label>
+                        </Box>
+                        <Box>
+                          <Select
+                            value={selectedType}
+                            onChange={handleChangeType}
+                            options={typeOptions}
+                            isDisabled={!includeOptions}
+                          />
+                        </Box>
+                      </Stack>
+                      <Stack spacing={3}>
+                        <Box>
+                          <label>Quality:</label>
+                        </Box>
+                        <Box>
+                          <NumberInput
+                            defaultValue={quality}
+                            min={0}
+                            max={1}
+                            step={0.1}
+                            name="quality"
+                            value={quality}
+                            onChange={(value) =>
+                              handleChangeNumberInput({
+                                target: { name: 'quality', value },
+                              })
+                            }
+                            isDisabled={includeOptions ? false : true}
+                          >
+                            <NumberInputField />
+                            <NumberInputStepper>
+                              <NumberIncrementStepper />
+                              <NumberDecrementStepper />
+                            </NumberInputStepper>
+                          </NumberInput>
+                        </Box>
+                      </Stack>
+                    </>
+                  )}
                 {selectedRenderAs.value !== 'svg' && (
                   <Stack spacing={3}>
                     <Box>
@@ -465,30 +465,30 @@ const Home: NextPage = () => {
                 </Stack>
                 {selectedRenderAs.value !== 'svg' && (
                   <Stack spacing={3}>
-                  <Box>
-                    <label>Scale:</label>
-                  </Box>
-                  <Box>
-                    <NumberInput
-                      defaultValue={scale}
-                      min={0}
-                      name="scale"
-                      value={scale}
-                      isDisabled={!includeOptions}
-                      onChange={(value) =>
-                        handleChangeNumberInput({
-                          target: { name: 'scale', value },
-                        })
-                      }
-                    >
-                      <NumberInputField />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
-                  </Box>
-                </Stack>
+                    <Box>
+                      <label>Scale:</label>
+                    </Box>
+                    <Box>
+                      <NumberInput
+                        defaultValue={scale}
+                        min={0}
+                        name="scale"
+                        value={scale}
+                        isDisabled={!includeOptions}
+                        onChange={(value) =>
+                          handleChangeNumberInput({
+                            target: { name: 'scale', value },
+                          })
+                        }
+                      >
+                        <NumberInputField />
+                        <NumberInputStepper>
+                          <NumberIncrementStepper />
+                          <NumberDecrementStepper />
+                        </NumberInputStepper>
+                      </NumberInput>
+                    </Box>
+                  </Stack>
                 )}
                 <Stack spacing={3}>
                   <Box>
@@ -662,8 +662,7 @@ const Home: NextPage = () => {
                                     name="width-logo"
                                     value={widthLogo}
                                     isDisabled={
-                                      !includeLogoOptions ||
-                                      !includeLogo
+                                      !includeLogoOptions || !includeLogo
                                     }
                                     onChange={(value) =>
                                       handleChangeNumberInput({
@@ -689,8 +688,7 @@ const Home: NextPage = () => {
                                 <Box style={{ marginTop: '4px' }}>
                                   <Checkbox
                                     isDisabled={
-                                      !includeLogoOptions ||
-                                      !includeLogo
+                                      !includeLogoOptions || !includeLogo
                                     }
                                     name="center-logo"
                                     defaultChecked
@@ -699,7 +697,11 @@ const Home: NextPage = () => {
                                 </Box>
                               </Stack>
                               <fieldset
-                                style={{ border: '1px solid #ccc', borderRadius: 5, padding: 20 }}
+                                style={{
+                                  border: '1px solid #ccc',
+                                  borderRadius: 5,
+                                  padding: 20,
+                                }}
                               >
                                 <legend>X, Y Setting</legend>
                                 <Stack spacing={3}>
@@ -730,37 +732,36 @@ const Home: NextPage = () => {
                                       </NumberInputStepper>
                                     </NumberInput>
                                   </Box>
-                                
-                              </Stack>
+                                </Stack>
                                 <Stack spacing={3}>
-                                <Box>
-                                  <label>Y:</label>
-                                </Box>
-                                <Box>
-                                  <NumberInput
-                                    defaultValue={y}
-                                    min={0}
-                                    name="y"
-                                    value={y}
-                                    isDisabled={
-                                      !includeLogoOptions ||
-                                      !includeLogo ||
-                                      centerLogo
-                                    }
-                                    onChange={(value) =>
-                                      handleChangeNumberInput({
-                                        target: { name: 'y', value },
-                                      })
-                                    }
-                                  >
-                                    <NumberInputField />
-                                    <NumberInputStepper>
-                                      <NumberIncrementStepper />
-                                      <NumberDecrementStepper />
-                                    </NumberInputStepper>
-                                  </NumberInput>
-                                </Box>
-                              </Stack>
+                                  <Box>
+                                    <label>Y:</label>
+                                  </Box>
+                                  <Box>
+                                    <NumberInput
+                                      defaultValue={y}
+                                      min={0}
+                                      name="y"
+                                      value={y}
+                                      isDisabled={
+                                        !includeLogoOptions ||
+                                        !includeLogo ||
+                                        centerLogo
+                                      }
+                                      onChange={(value) =>
+                                        handleChangeNumberInput({
+                                          target: { name: 'y', value },
+                                        })
+                                      }
+                                    >
+                                      <NumberInputField />
+                                      <NumberInputStepper>
+                                        <NumberIncrementStepper />
+                                        <NumberDecrementStepper />
+                                      </NumberInputStepper>
+                                    </NumberInput>
+                                  </Box>
+                                </Stack>
                               </fieldset>
                             </Stack>
                           </fieldset>
@@ -880,8 +881,8 @@ const Home: NextPage = () => {
           <Stack>
             <Stack spacing={3}>
               <Box>
-              <Code language="javascript">
-                {`import React from 'react';
+                <Code language="javascript">
+                  {`import React from 'react';
 import { useQRCode } from 'next-qrcode';
 
 function App() {
@@ -892,7 +893,7 @@ function App() {
   );
 }
 `}
-              </Code>
+                </Code>
               </Box>
             </Stack>
           </Stack>
