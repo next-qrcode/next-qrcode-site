@@ -223,8 +223,8 @@ const Home: NextPage = () => {
       }}`
       } else {
         logoStr = `logo={{
-          src: '${src}',
-        }}`
+        src: '${src}',
+      }}`
       }
     }
   
@@ -893,71 +893,6 @@ function App() {
 }
 `}
               </Code>
-                {/* <Code language="javascript">
-                  {`import React from 'react';
-import { useQRCode } from 'next-qrcode';
-
-function App() {
-  const { ${
-    selectedRenderAs.value === 'canvas' ? 'Canvas' : 'Image'
-  } } = useQRCode();
-
-  return (
-    ${
-      selectedRenderAs.value === 'canvas'
-        && includeLogo
-          ? `<Canvas
-      text='${text}'
-      ${
-        includeOptions
-          ? `options: {{
-        level: '${selectedLevel.value}',
-        margin: ${margin},
-        scale: ${scale},
-        width: ${width},
-        color: {
-          dark: '${darkColor}',
-          light: '${lightColor}',
-        }
-      }}
-      logo: {{
-        src: '${src}',
-        ${
-          includeLogoOptions
-            ? `options: {
-          width: ${widthLogo},
-          x: ${x},
-          y: ${y},
-        }`
-            : ''
-        }
-      }}`
-          : ''
-      }
-    />`
-          : `<Canvas
-      text='${text}'
-      ${
-        includeOptions
-          ? `options: {{
-        level: '${selectedLevel.value}',
-        margin: ${margin},
-        scale: ${scale},
-        width: ${width},
-        color: {
-          dark: '${darkColor}',
-          light: '${lightColor}',
-        }
-      }}`
-        : ''
-    }
-    />`
-    }
-  );
-}
-
-export default App;`}
-                </Code> */}
               </Box>
             </Stack>
           </Stack>
