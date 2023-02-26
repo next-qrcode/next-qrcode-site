@@ -206,41 +206,41 @@ const Home: NextPage = () => {
     selectedRenderAsStr = 'Image'
   }
 
-  if (includeLogoOptions) {
-    includeLogoOptionsStr = `options: {
-          width: ${widthLogo},
-          x: ${x},
-          y: ${y},
-        },`
-  }
-
-  if (includeLogo) {
-    if (includeLogoOptions) {
-      logoStr = `logo={{
-        src: '${src}',
-        ${includeLogoOptionsStr}
-      }}`
-    } else {
-      logoStr = `logo={{
-        src: '${src}',
-      }}`
-    }
-  }
-
-  if (includeOptions) {
-    includeOptionsStr = `options={{
-        level: '${selectedLevel.value}',
-        margin: ${margin},
-        scale: ${scale},
-        width: ${width},
-        color: {
-          dark: '${darkColor}',
-          light: '${lightColor}',
-        },
-      }}`
-  }
-
   if (selectedRenderAs.value === 'canvas') {
+    if (includeLogoOptions) {
+      includeLogoOptionsStr = `options: {
+            width: ${widthLogo},
+            x: ${x},
+            y: ${y},
+          },`
+    }
+  
+    if (includeLogo) {
+      if (includeLogoOptions) {
+        logoStr = `logo={{
+          src: '${src}',
+          ${includeLogoOptionsStr}
+        }}`
+      } else {
+        logoStr = `logo={{
+          src: '${src}',
+        }}`
+      }
+    }
+  
+    if (includeOptions) {
+      includeOptionsStr = `options={{
+          level: '${selectedLevel.value}',
+          margin: ${margin},
+          scale: ${scale},
+          width: ${width},
+          color: {
+            dark: '${darkColor}',
+            light: '${lightColor}',
+          },
+        }}`
+    }
+
     if (includeOptionsStr) {
       if (includeLogo) {
         componentStr = `<Canvas
@@ -268,8 +268,20 @@ const Home: NextPage = () => {
     }
 
   } else if (selectedRenderAs.value === 'svg') {
+    if (includeOptions) {
+      includeOptionsStr = `options={{
+        margin: ${margin},
+        width: ${width},
+        color: {
+          dark: '${darkColor}',
+          light: '${lightColor}',
+        },
+      }}`
+    }
+
     componentStr = `<SVG
       text='${text}'
+      ${includeOptionsStr}
     />`
   }
 
