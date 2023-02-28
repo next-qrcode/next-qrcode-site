@@ -67,8 +67,8 @@ const Home: NextPage = () => {
   const [includeLogo, setIncludeLogo] = useState(true)
   const [includeLogoOptions, setIncludeLogoOptions] = useState(true)
   const [widthLogo, setWidthLogo] = useState(35)
-  const [x, setX] = useState(undefined)
-  const [y, setY] = useState(undefined)
+  const [x, setX] = useState<any>(undefined)
+  const [y, setY] = useState<any>(undefined)
   const [centerLogo, setCenterLogo] = useState(true)
 
   const handleClickDark = () => {
