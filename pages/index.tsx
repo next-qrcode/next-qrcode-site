@@ -67,8 +67,8 @@ const Home: NextPage = () => {
   const [includeLogo, setIncludeLogo] = useState(true)
   const [includeLogoOptions, setIncludeLogoOptions] = useState(true)
   const [widthLogo, setWidthLogo] = useState(35)
-  const [x, setX] = useState(0)
-  const [y, setY] = useState(0)
+  const [x, setX] = useState(undefined)
+  const [y, setY] = useState(undefined)
   const [centerLogo, setCenterLogo] = useState(true)
 
   const handleClickDark = () => {
@@ -127,11 +127,11 @@ const Home: NextPage = () => {
     } else if (name === 'center-logo') {
       setCenterLogo(event.target.checked)
       if (centerLogo) {
-        setX(1)
-        setY(1)
-      } else {
         setX(0)
         setY(0)
+      } else {
+        setX(undefined)
+        setY(undefined)
       }
     }
   }
@@ -709,28 +709,35 @@ const Home: NextPage = () => {
                                     <label>X:</label>
                                   </Box>
                                   <Box>
-                                    <NumberInput
-                                      defaultValue={x}
-                                      min={0}
-                                      name="x"
-                                      value={x}
-                                      isDisabled={
-                                        !includeLogoOptions ||
-                                        !includeLogo ||
-                                        centerLogo
-                                      }
-                                      onChange={(value) =>
-                                        handleChangeNumberInput({
-                                          target: { name: 'x', value },
-                                        })
-                                      }
-                                    >
-                                      <NumberInputField />
-                                      <NumberInputStepper>
-                                        <NumberIncrementStepper />
-                                        <NumberDecrementStepper />
-                                      </NumberInputStepper>
-                                    </NumberInput>
+                                    {centerLogo ? (
+                                      <Input
+                                        value={'undefined'}
+                                        isDisabled={true}
+                                      />
+                                    ) : (
+                                      <NumberInput
+                                        defaultValue={x}
+                                        min={0}
+                                        name="x"
+                                        value={x}
+                                        isDisabled={
+                                          !includeLogoOptions ||
+                                          !includeLogo ||
+                                          centerLogo
+                                        }
+                                        onChange={(value) =>
+                                          handleChangeNumberInput({
+                                            target: { name: 'x', value },
+                                          })
+                                        }
+                                      >
+                                        <NumberInputField />
+                                        <NumberInputStepper>
+                                          <NumberIncrementStepper />
+                                          <NumberDecrementStepper />
+                                        </NumberInputStepper>
+                                      </NumberInput>
+                                    )}
                                   </Box>
                                 </Stack>
                                 <Stack spacing={3}>
@@ -738,28 +745,35 @@ const Home: NextPage = () => {
                                     <label>Y:</label>
                                   </Box>
                                   <Box>
-                                    <NumberInput
-                                      defaultValue={y}
-                                      min={0}
-                                      name="y"
-                                      value={y}
-                                      isDisabled={
-                                        !includeLogoOptions ||
-                                        !includeLogo ||
-                                        centerLogo
-                                      }
-                                      onChange={(value) =>
-                                        handleChangeNumberInput({
-                                          target: { name: 'y', value },
-                                        })
-                                      }
-                                    >
-                                      <NumberInputField />
-                                      <NumberInputStepper>
-                                        <NumberIncrementStepper />
-                                        <NumberDecrementStepper />
-                                      </NumberInputStepper>
-                                    </NumberInput>
+                                    {centerLogo ? (
+                                      <Input
+                                        value={'undefined'}
+                                        isDisabled={true}
+                                      />
+                                    ) : (
+                                      <NumberInput
+                                        defaultValue={y}
+                                        min={0}
+                                        name="y"
+                                        value={y}
+                                        isDisabled={
+                                          !includeLogoOptions ||
+                                          !includeLogo ||
+                                          centerLogo
+                                        }
+                                        onChange={(value) =>
+                                          handleChangeNumberInput({
+                                            target: { name: 'y', value },
+                                          })
+                                        }
+                                      >
+                                        <NumberInputField />
+                                        <NumberInputStepper>
+                                          <NumberIncrementStepper />
+                                          <NumberDecrementStepper />
+                                        </NumberInputStepper>
+                                      </NumberInput>
+                                    )}
                                   </Box>
                                 </Stack>
                               </fieldset>
