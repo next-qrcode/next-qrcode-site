@@ -1,0 +1,44 @@
+# 💡 SVG
+
+#### 👨‍💻 Code
+
+```js copy
+import React from 'react'
+import { useQRCode } from 'next-qrcode'
+
+function App() {
+  const { SVG } = useQRCode()
+
+  return (
+    <SVG
+      text={'https://github.com/bunlong/next-qrcode'}
+      options={{
+        margin: 2,
+        width: 200,
+        color: {
+          dark: '#010599FF',
+          light: '#FFBF60FF',
+        },
+      }}
+    />
+  )
+}
+
+export default App
+```
+
+#### 📖 Props
+
+| Prop | Type | Require | Description |
+| :--- | :--- | :--- | :--- |
+| text | string | ✔️ | Text/URL to encode. |
+| options | options | ❌ | QR code options. |
+
+#### 📚 Options
+
+| Prop | Type | Default | Require | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| margin | number | `4` | ❌ | Define how much wide the quiet zone should be. |
+| width | number | `4` | ❌ | Forces a specific width for the output image. If width is too small to contain the qr symbol, this option will be ignored. Takes precedence over `scale`. |
+| color.dark | string | `#000000ff` | ❌ | Color of dark module. Value must be in hex format (RGBA). Note: dark color should always be darker than `color.light`. |
+| color.light | string | `#ffffffff` | ❌ | Color of light module. Value must be in hex format (RGBA). |
