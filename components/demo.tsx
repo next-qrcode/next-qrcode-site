@@ -188,28 +188,39 @@ export default function Demo() {
 
   return (
     <>
-      <label>Render:</label>
-      <select onChange={(e: any) => setSelectedRenderAs(e.target.value)} className={styles.select}>
-        <option value="canvas">Canvas</option>
-        <option value="img">Image</option>
-        <option value="svg">SVG</option>
-      </select>
-      <br />
-      <label>Text:</label>
-      <input
-        type="text"
-        name="text"
-        value={text}
-        onChange={(e: any) => setText(e.target.value)}
-      />
-      <br />
-      <label>Include Options:</label>
-      <input
-        type="checkbox"
-        defaultChecked
-        onChange={(e: any) => setIncludeOptions(e.target.checked)}
-      />
-      <br />
+      <section className={styles.section}>
+        <div className={styles.row}>
+          <label>Render:</label>
+        </div>
+        <div className={styles.row}>
+          <select onChange={(e: any) => setSelectedRenderAs(e.target.value)} className={styles.select}>
+            <option value="canvas">Canvas</option>
+            <option value="img">Image</option>
+            <option value="svg">SVG</option>
+          </select>
+        </div>
+      </section>
+      <section className={styles.section}>
+        <div className={styles.row}>
+          <label>Text:</label>
+        </div>
+        <input
+          type="text"
+          name="text"
+          value={text}
+          onChange={(e: any) => setText(e.target.value)}
+        />
+      </section>
+      <section className={styles.section}>
+        <div className={styles.row}>
+          <label>Include Options:</label>
+          <input
+            type="checkbox"
+            defaultChecked
+            onChange={(e: any) => setIncludeOptions(e.target.checked)}
+          />
+        </div>
+      </section>
       <fieldset
         style={{ border: '1px solid #ccc', borderRadius: 5, padding: 20 }}
       >
