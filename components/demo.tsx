@@ -221,9 +221,7 @@ export default function Demo() {
           />
         </div>
       </section>
-      <fieldset
-        style={{ border: '1px solid #ccc', borderRadius: 5, padding: 20 }}
-      >
+      <fieldset className={styles.fieldset}>
         <legend>Options</legend>
         {selectedRenderAs === 'img' && (
           <>

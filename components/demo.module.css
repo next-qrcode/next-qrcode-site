@@ -7,3 +7,14 @@
   width: 100%;
   margin-bottom: 5px;
 }
+
+.select {
+  width: 100%;
+  padding: 8px 16px;
+}
+
+.fieldset {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0 20px 20px 20px;
+}
