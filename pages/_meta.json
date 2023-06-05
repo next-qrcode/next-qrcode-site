@@ -1,0 +1,13 @@
+{
+  "index": "Introduction",
+  "Document": {
+    "title": "Document",
+    "type": "page",
+    "href": "/"
+  },
+  "demo": {
+    "title": "Demo",
+    "type": "page"
+  },
+  "use-qrcode": "useQRCode"
+}

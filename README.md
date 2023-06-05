@@ -1,11 +1,3 @@
-## next-qrcode
+# next-qrcode
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+A QR code plugin for Next.js, Create React App, Gatsby.js as well as React apps.

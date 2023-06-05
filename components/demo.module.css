@@ -1,0 +1,27 @@
+.section {
+  margin-bottom: 20px;
+}
+
+.row {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.control {
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  background-color : #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  color: #212529;
+}
+
+.fieldset {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 25px 20px 20px 20px;
+}
+
+.fieldset .section:last-child {
+  margin-bottom: 0px;
+}
