@@ -58,50 +58,50 @@ export default function Demo() {
 
       if (includeLogoOptions) {
         setIncludeLogoOptionsStr(`options: {
-            width: ${widthLogo},
-            x: ${x},
-            y: ${y},
-          },`)
+          width: ${widthLogo},
+          x: ${x},
+          y: ${y},
+        },`)
       }
 
       if (includeLogo) {
         if (includeLogoOptions) {
           setLogoStr(`logo={{
-          src: '${src}',
-          ${includeLogoOptionsStr}
-        }}`)
+        src: '${src}',
+        ${includeLogoOptionsStr}
+      }}`)
         } else {
           setLogoStr(`logo={{
-          src: '${src}',
-        }}`)
+        src: '${src}',
+      }}`)
         }
       }
 
       if (includeOptions) {
         setIncludeOptionsStr(`options={{
-          level: '${selectedLevel}',
-          margin: ${margin},
-          scale: ${scale},
-          width: ${width},
-          color: {
-            dark: '${darkColor}',
-            light: '${lightColor}',
-          },
-        }}`)
+        level: '${selectedLevel}',
+        margin: ${margin},
+        scale: ${scale},
+        width: ${width},
+        color: {
+          dark: '${darkColor}',
+          light: '${lightColor}',
+        },
+      }}`)
       }
 
       if (includeOptionsStr) {
         if (includeLogo) {
           setComponentStr(`<Canvas
-        text='${text}'
-        ${includeOptionsStr}
-        ${logoStr}
-      />`)
+      text='${text}'
+      ${includeOptionsStr}
+      ${logoStr}
+    />`)
         } else {
-          setComponentStr(`<Canvas
-        text='${text}'
-        ${includeOptionsStr}
-      />`)
+        setComponentStr(`<Canvas
+      text='${text}'
+      ${includeOptionsStr}
+    />`)
         }
       } else {
         if (includeLogo) {
@@ -120,46 +120,46 @@ export default function Demo() {
 
       if (includeOptions) {
         setIncludeOptionsStr(`options={{
-          margin: ${margin},
-          width: ${width},
-          color: {
-            dark: '${darkColor}',
-            light: '${lightColor}',
-          },
-        }}`)
+        margin: ${margin},
+        width: ${width},
+        color: {
+          dark: '${darkColor}',
+          light: '${lightColor}',
+        },
+      }}`)
 
         setComponentStr(`<SVG
-        text='${text}'
-        ${includeOptionsStr}
-      />`)
+      text='${text}'
+      ${includeOptionsStr}
+    />`)
       } else {
         setComponentStr(`<SVG
-        text='${text}'
-      />`)
+      text='${text}'
+    />`)
       }
     } else {
       setSelectedRenderAsStr('Image')
 
       if (includeOptions) {
-        setIncludeOptionsStr(`options={{
-          level: '${selectedLevel}',
-          margin: ${margin},
-          scale: ${scale},
-          width: ${width},
-          color: {
-            dark: '${darkColor}',
-            light: '${lightColor}',
-          },
-        }}`)
+      setIncludeOptionsStr(`options={{
+        level: '${selectedLevel}',
+        margin: ${margin},
+        scale: ${scale},
+        width: ${width},
+        color: {
+          dark: '${darkColor}',
+          light: '${lightColor}',
+        },
+      }}`)
 
         setComponentStr(`<Image
-        text='${text}'
-        ${includeOptionsStr}
-      />`)
+      text='${text}'
+      ${includeOptionsStr}
+    />`)
       } else {
-        setComponentStr(`<Image
-        text='${text}'
-      />`)
+      setComponentStr(`<Image
+      text='${text}'
+    />`)
       }
     }
 
