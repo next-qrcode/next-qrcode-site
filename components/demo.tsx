@@ -1,5 +1,4 @@
 import { useState, CSSProperties, useEffect } from 'react'
-
 import { useQRCode } from 'next-qrcode'
 import { SketchPicker } from 'react-color'
 import { usePrism } from 'next-prism'
@@ -11,7 +10,6 @@ import 'next-prism/themes/tomorrow.css'
 export default function Demo() {
   const { Canvas, SVG, Image } = useQRCode()
   const { Code, highlightAll } = usePrism()
-
   const [selectedRenderAs, setSelectedRenderAs] = useState('canvas')
   const [text, setText] = useState('https://github.com/Bunlong/next-qrcode')
   const [src, setSrc] = useState('https://next-qrcode.js.org/github.png')
@@ -30,14 +28,10 @@ export default function Demo() {
   const [includeLogoOptions, setIncludeLogoOptions] = useState(true)
   const [widthLogo, setWidthLogo] = useState(35)
   const [centerLogo, setCenterLogo] = useState(true)
-  const [x, setX] = useState<any>(undefined)
-  const [y, setY] = useState<any>(undefined)
-
+  const [x, setX] = useState<any>(0)
+  const [y, setY] = useState<any>(0)
   const [selectedRenderAsStr, setSelectedRenderAsStr] = useState<string>('')
-  const [includeLogoOptionsStr, setIncludeLogoOptionsStr] = useState<string>('')
   const [componentStr, setComponentStr] = useState<string>('')
-  const [includeOptionsStr, setIncludeOptionsStr] = useState<string>('')
-  const [logoStr, setLogoStr] = useState<string>('')
 
   const disabled = Object.assign(
     {
@@ -56,29 +50,10 @@ export default function Demo() {
     if (selectedRenderAs === 'canvas') {
       setSelectedRenderAsStr('Canvas')
 
-      if (includeLogoOptions) {
-        setIncludeLogoOptionsStr(`options: {
-          width: ${widthLogo},
-          x: ${x},
-          y: ${y},
-        },`)
-      }
-
-      if (includeLogo) {
-        if (includeLogoOptions) {
-          setLogoStr(`logo={{
-        src: '${src}',
-        ${includeLogoOptionsStr}
-      }}`)
-        } else {
-          setLogoStr(`logo={{
-        src: '${src}',
-      }}`)
-        }
-      }
+      let str = ''
 
       if (includeOptions) {
-        setIncludeOptionsStr(`options={{
+        str += `options={{
         level: '${selectedLevel}',
         margin: ${margin},
         scale: ${scale},
@@ -87,50 +62,71 @@ export default function Demo() {
           dark: '${darkColor}',
           light: '${lightColor}',
         },
-      }}`)
+      }}`
       }
 
-      if (includeOptionsStr) {
-        if (includeLogo) {
-          setComponentStr(`<Canvas
-      text='${text}'
-      ${includeOptionsStr}
-      ${logoStr}
-    />`)
+      if (includeLogo) {
+        if (includeOptions) {
+          str += `
+      logo={{
+        src: '${src}',
+      `
         } else {
+          str += `logo={{
+      src: '${src}',
+      `
+        }
+
+        if (includeLogoOptions) {
+          if (centerLogo) {
+            str += `  options: {
+          width: ${widthLogo},
+          x: undefined,
+          y: undefined,
+        }
+      }}`
+          } else {
+            str += `  options: {
+          width: ${widthLogo},
+          x: ${x},
+          y: ${y},
+        }
+      }}`
+          }
+        } else {
+          str += `}}`
+        }
+      }
+
+      if (str) {
         setComponentStr(`<Canvas
       text='${text}'
-      ${includeOptionsStr}
+      ${str}
     />`)
-        }
       } else {
-        if (includeLogo) {
-          setComponentStr(`<Canvas
-        text='${text}'
-        ${logoStr}
-      />`)
-        } else {
-          setComponentStr(`<Canvas
-        text='${text}'
-      />`)
-        }
+        setComponentStr(`<Canvas
+      text='${text}'
+    />`)
       }
     } else if (selectedRenderAs === 'svg') {
       setSelectedRenderAsStr('SVG')
 
+      let str = ''
+
       if (includeOptions) {
-        setIncludeOptionsStr(`options={{
+        str += `options={{
         margin: ${margin},
         width: ${width},
         color: {
           dark: '${darkColor}',
           light: '${lightColor}',
         },
-      }}`)
-
+      }}`
+      }
+      if (str) {
         setComponentStr(`<SVG
       text='${text}'
-      ${includeOptionsStr}
+      ${str}
     />`)
       } else {
         setComponentStr(`<SVG
@@ -140,8 +136,10 @@ export default function Demo() {
     } else {
       setSelectedRenderAsStr('Image')
 
+      let str = ''
+
       if (includeOptions) {
-      setIncludeOptionsStr(`options={{
+        str = `options={{
         level: '${selectedLevel}',
         margin: ${margin},
         scale: ${scale},
@@ -150,14 +148,16 @@ export default function Demo() {
           dark: '${darkColor}',
           light: '${lightColor}',
         },
-      }}`)
+      }}`
+      }
 
+      if (str) {
         setComponentStr(`<Image
       text='${text}'
-      ${includeOptionsStr}
+      ${str}
     />`)
       } else {
-      setComponentStr(`<Image
+        setComponentStr(`<Image
       text='${text}'
     />`)
       }
@@ -182,6 +182,7 @@ export default function Demo() {
     includeLogo,
     includeLogoOptions,
     widthLogo,
+    centerLogo,
     x,
     y,
   ])
@@ -197,9 +198,9 @@ export default function Demo() {
             className={styles.control}
             onChange={(e: any) => setSelectedRenderAs(e.target.value)}
           >
-            <option value="canvas">Canvas</option>
-            <option value="img">Image</option>
-            <option value="svg">SVG</option>
+            <option value='canvas'>Canvas</option>
+            <option value='img'>Image</option>
+            <option value='svg'>SVG</option>
           </select>
         </div>
       </section>
@@ -209,8 +210,8 @@ export default function Demo() {
         </div>
         <input
           className={styles.control}
-          type="text"
-          name="text"
+          type='text'
+          name='text'
           value={text}
           onChange={(e: any) => setText(e.target.value)}
         />
@@ -220,7 +221,7 @@ export default function Demo() {
           <label>Include Options</label>
           &nbsp;
           <input
-            type="checkbox"
+            type='checkbox'
             defaultChecked
             onChange={(e: any) => setIncludeOptions(e.target.checked)}
           />
@@ -239,9 +240,9 @@ export default function Demo() {
                 disabled={!includeOptions}
                 onChange={(e: any) => setSelectedType(e.target.value)}
               >
-                <option value="image/png">image/png</option>
-                <option value="image/jpeg">image/jpeg</option>
-                <option value="image/webp">image/webp</option>
+                <option value='image/png'>image/png</option>
+                <option value='image/jpeg'>image/jpeg</option>
+                <option value='image/webp'>image/webp</option>
               </select>
             </section>
             <section className={styles.section}>
@@ -250,9 +251,9 @@ export default function Demo() {
               </div>
               <input
                 className={styles.control}
-                type="number"
-                min="0"
-                max="1"
+                type='number'
+                min='0'
+                max='1'
                 disabled={includeOptions ? false : true}
                 value={quality}
                 step={0.1}
@@ -271,10 +272,10 @@ export default function Demo() {
               disabled={!includeOptions}
               onChange={(e: any) => setSelectedLevel(e.target.value)}
             >
-              <option value="L">L</option>
-              <option value="M">M</option>
-              <option value="Q">Q</option>
-              <option value="H">H</option>
+              <option value='L'>L</option>
+              <option value='M'>M</option>
+              <option value='Q'>Q</option>
+              <option value='H'>H</option>
             </select>
           </section>
         )}
@@ -284,8 +285,8 @@ export default function Demo() {
           </div>
           <input
             className={styles.control}
-            type="number"
-            min="0"
+            type='number'
+            min='0'
             disabled={!includeOptions}
             value={margin}
             onChange={(e: any) => setMargin(e.target.value)}
@@ -298,8 +299,8 @@ export default function Demo() {
             </div>
             <input
               className={styles.control}
-              type="number"
-              min="0"
+              type='number'
+              min='0'
               disabled={!includeOptions}
               value={scale}
               onChange={(e: any) => setScale(e.target.value)}
@@ -312,8 +313,8 @@ export default function Demo() {
           </div>
           <input
             className={styles.control}
-            type="number"
-            min="0"
+            type='number'
+            min='0'
             disabled={!includeOptions}
             value={width}
             onChange={(e: any) => setWidth(e.target.value)}
@@ -400,7 +401,7 @@ export default function Demo() {
               <label>Include Logo</label>
               &nbsp;
               <input
-                type="checkbox"
+                type='checkbox'
                 defaultChecked
                 onChange={(e: any) => setIncludeLogo(e.target.checked)}
               />
@@ -414,7 +415,7 @@ export default function Demo() {
               </div>
               <input
                 className={styles.control}
-                type="text"
+                type='text'
                 disabled={!includeLogo}
                 value={src}
                 onChange={(e: any) => setSrc(e.target.value)}
@@ -425,7 +426,7 @@ export default function Demo() {
                 <label>Include Options</label>
                 &nbsp;
                 <input
-                  type="checkbox"
+                  type='checkbox'
                   disabled={!includeLogo}
                   defaultChecked
                   onChange={(e: any) => setIncludeLogoOptions(e.target.checked)}
@@ -440,8 +441,8 @@ export default function Demo() {
                 </div>
                 <input
                   className={styles.control}
-                  type="number"
-                  min="0"
+                  type='number'
+                  min='0'
                   disabled={!includeLogoOptions || !includeLogo}
                   value={widthLogo}
                   onChange={(e: any) => setWidthLogo(e.target.value)}
@@ -452,7 +453,7 @@ export default function Demo() {
                   <label>Center Logo</label>
                   &nbsp;
                   <input
-                    type="checkbox"
+                    type='checkbox'
                     disabled={!includeLogoOptions || !includeLogo}
                     defaultChecked
                     onChange={(e: any) => setCenterLogo(e.target.checked)}
@@ -465,27 +466,45 @@ export default function Demo() {
                   <div className={styles.row}>
                     <label>X</label>
                   </div>
-                  <input
-                    className={styles.control}
-                    type="number"
-                    min="0"
-                    disabled={!includeLogoOptions || !includeLogo || !centerLogo}
-                    value={x}
-                    onChange={(e: any) => setX(e.target.value)}
-                  />
+                  {includeLogo && includeLogoOptions && centerLogo ? (
+                    <input
+                      className={styles.control}
+                      type='text'
+                      disabled={includeLogo || includeLogoOptions || centerLogo}
+                      value={'undefined'}
+                    />
+                  ) : (
+                    <input
+                      className={styles.control}
+                      type='number'
+                      min='0'
+                      disabled={!includeLogo || !includeLogoOptions}
+                      value={x}
+                      onChange={(e: any) => setX(e.target.value)}
+                    />
+                  )}
                 </section>
                 <section className={styles.section}>
                   <div className={styles.row}>
                     <label>Y</label>
                   </div>
-                  <input
-                    className={styles.control}
-                    type="number"
-                    min="0"
-                    disabled={!includeLogoOptions || !includeLogo || !centerLogo}
-                    value={y}
-                    onChange={(e: any) => setY(e.target.value)}
-                  />
+                  {includeLogo && includeLogoOptions && centerLogo ? (
+                    <input
+                      className={styles.control}
+                      type='text'
+                      disabled={includeLogo || includeLogoOptions || centerLogo}
+                      value={'undefined'}
+                    />
+                  ) : (
+                    <input
+                      className={styles.control}
+                      type='number'
+                      min='0'
+                      disabled={!includeLogo || !includeLogoOptions}
+                      value={y}
+                      onChange={(e: any) => setY(e.target.value)}
+                    />
+                  )}
                 </section>
               </fieldset>
             </fieldset>
@@ -493,67 +512,164 @@ export default function Demo() {
         </>
       )}
       <br />
+      {selectedRenderAs === 'canvas' && !includeOptions && !includeLogo && (
+        <Canvas text={text} />
+      )}
       {selectedRenderAs === 'canvas' &&
-        (includeOptions ? (
-          includeLogo ? (
-            includeLogoOptions ? (
-              <Canvas
-                text={text}
-                options={{
-                  level: selectedLevel,
-                  margin: margin,
-                  scale: scale,
-                  width: width,
-                  color: {
-                    dark: darkColor,
-                    light: lightColor,
-                  },
-                }}
-                logo={{
-                  src: src,
-                  options: {
-                    width: widthLogo,
-                    x: x,
-                    y: y,
-                  },
-                }}
-              />
-            ) : (
-              <Canvas
-                text={text}
-                options={{
-                  level: selectedLevel,
-                  margin: margin,
-                  scale: scale,
-                  width: width,
-                  color: {
-                    dark: darkColor,
-                    light: lightColor,
-                  },
-                }}
-                logo={{
-                  src: src,
-                }}
-              />
-            )
-          ) : (
-            <Canvas
-              text={text}
-              options={{
-                level: selectedLevel,
-                margin: margin,
-                scale: scale,
-                width: width,
-                color: {
-                  dark: darkColor,
-                  light: lightColor,
-                },
-              }}
-            />
-          )
-        ) : (
-          <Canvas text={text} />
-        ))}
+        includeOptions &&
+        !includeLogo &&
+        !includeLogoOptions &&
+        !centerLogo && (
+          <Canvas
+            text={text}
+            options={{
+              level: selectedLevel,
+              margin: margin,
+              scale: scale,
+              width: width,
+              color: {
+                dark: darkColor,
+                light: lightColor,
+              },
+            }}
+          />
+        )}
+      {selectedRenderAs === 'canvas' &&
+        includeOptions &&
+        includeLogo &&
+        !includeLogoOptions &&
+        !centerLogo && (
+          <Canvas
+            text={text}
+            options={{
+              level: selectedLevel,
+              margin: margin,
+              scale: scale,
+              width: width,
+              color: {
+                dark: darkColor,
+                light: lightColor,
+              },
+            }}
+            logo={{
+              src: src,
+            }}
+          />
+        )}
+      {selectedRenderAs === 'canvas' &&
+        includeOptions &&
+        includeLogo &&
+        includeLogoOptions &&
+        !centerLogo && (
+          <Canvas
+            text={text}
+            options={{
+              level: selectedLevel,
+              margin: margin,
+              scale: scale,
+              width: width,
+              color: {
+                dark: darkColor,
+                light: lightColor,
+              },
+            }}
+            logo={{
+              src: src,
+              options: {
+                width: widthLogo,
+                x: x,
+                y: y,
+              },
+            }}
+          />
+        )}
+      {selectedRenderAs === 'canvas' &&
+        includeOptions &&
+        includeLogo &&
+        includeLogoOptions &&
+        centerLogo && (
+          <Canvas
+            text={text}
+            options={{
+              level: selectedLevel,
+              margin: margin,
+              scale: scale,
+              width: width,
+              color: {
+                dark: darkColor,
+                light: lightColor,
+              },
+            }}
+            logo={{
+              src: src,
+              options: {
+                width: widthLogo,
+                x: undefined,
+                y: undefined,
+              },
+            }}
+          />
+        )}
+      {selectedRenderAs === 'canvas' && includeOptions && !includeLogo && (
+        <Canvas
+          text={text}
+          options={{
+            level: selectedLevel,
+            margin: margin,
+            scale: scale,
+            width: width,
+            color: {
+              dark: darkColor,
+              light: lightColor,
+            },
+          }}
+        />
+      )}
+      {selectedRenderAs === 'canvas' &&
+        !includeOptions &&
+        includeLogo &&
+        includeLogoOptions &&
+        centerLogo && (
+          <Canvas
+            text={text}
+            logo={{
+              src: src,
+              options: {
+                width: widthLogo,
+                x: undefined,
+                y: undefined,
+              },
+            }}
+          />
+        )}
+      {selectedRenderAs === 'canvas' &&
+        !includeOptions &&
+        includeLogo &&
+        includeLogoOptions &&
+        !centerLogo && (
+          <Canvas
+            text={text}
+            logo={{
+              src: src,
+              options: {
+                width: widthLogo,
+                x: x,
+                y: y,
+              },
+            }}
+          />
+        )}
+      {selectedRenderAs === 'canvas' &&
+        !includeOptions &&
+        includeLogo &&
+        !includeLogoOptions && (
+          <Canvas
+            text={text}
+            logo={{
+              src: src,
+            }}
+          />
+        )}
       {selectedRenderAs === 'img' &&
         (includeOptions ? (
           <Image
@@ -591,7 +707,6 @@ export default function Demo() {
           <Image text={text} />
         ))}
       <br />
-
       <Code>
         {`import React from 'react';
 import { useQRCode } from 'next-qrcode';
