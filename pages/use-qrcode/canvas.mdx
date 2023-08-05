@@ -15,7 +15,7 @@ function App() {
       options={{
         type: 'image/jpeg',
         quality: 0.3,
-        level: 'M',
+        errorCorrectionLevel: 'M',
         margin: 3,
         scale: 4,
         width: 200,
@@ -42,7 +42,7 @@ export default App
 
 | Prop | Type | Default | Require | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| level | string | `M` | ❌ | Correction level. Possible values are `low`, `medium`, `quartile`, `high` or `L`, `M`, `Q`, `H`. |
+| errorCorrectionLevel | string | `M` | ❌ | Correction level. Possible values are `low`, `medium`, `quartile`, `high` or `L`, `M`, `Q`, `H`. |
 | margin | number | `4` | ❌ | Define how much wide the quiet zone should be. |
 | scale | number | `4` | ❌ | Scale factor. A value of <code>1</code> means 1px per modules (black dots). |
 | width | number | `4` | ❌ | Forces a specific width for the output image. If width is too small to contain the qr symbol, this option will be ignored. Takes precedence over `scale`. |

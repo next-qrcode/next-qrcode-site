@@ -54,7 +54,7 @@ export default function Demo() {
 
       if (includeOptions) {
         str += `options={{
-        level: '${selectedLevel}',
+        errorCorrectionLevel: '${selectedLevel}',
         margin: ${margin},
         scale: ${scale},
         width: ${width},
@@ -140,7 +140,7 @@ export default function Demo() {
 
       if (includeOptions) {
         str = `options={{
-        level: '${selectedLevel}',
+        errorCorrectionLevel: '${selectedLevel}',
         margin: ${margin},
         scale: ${scale},
         width: ${width},
@@ -265,7 +265,7 @@ export default function Demo() {
         {selectedRenderAs !== 'svg' && (
           <section className={styles.section}>
             <div className={styles.row}>
-              <label>Level</label>
+              <label>Error Correction Level</label>
             </div>
             <select
               className={styles.control}
@@ -523,7 +523,7 @@ export default function Demo() {
           <Canvas
             text={text}
             options={{
-              level: selectedLevel,
+              errorCorrectionLevel: selectedLevel,
               margin: margin,
               scale: scale,
               width: width,
@@ -542,7 +542,7 @@ export default function Demo() {
           <Canvas
             text={text}
             options={{
-              level: selectedLevel,
+              errorCorrectionLevel: selectedLevel,
               margin: margin,
               scale: scale,
               width: width,
@@ -564,7 +564,7 @@ export default function Demo() {
           <Canvas
             text={text}
             options={{
-              level: selectedLevel,
+              errorCorrectionLevel: selectedLevel,
               margin: margin,
               scale: scale,
               width: width,
@@ -591,7 +591,7 @@ export default function Demo() {
           <Canvas
             text={text}
             options={{
-              level: selectedLevel,
+              errorCorrectionLevel: selectedLevel,
               margin: margin,
               scale: scale,
               width: width,
@@ -614,7 +614,7 @@ export default function Demo() {
         <Canvas
           text={text}
           options={{
-            level: selectedLevel,
+            errorCorrectionLevel: selectedLevel,
             margin: margin,
             scale: scale,
             width: width,
@@ -677,7 +677,7 @@ export default function Demo() {
             options={{
               type: selectedType,
               quality: quality,
-              level: selectedLevel,
+              errorCorrectionLevel: selectedLevel,
               margin: margin,
               scale: scale,
               width: width,
